@@ -9,11 +9,11 @@ view = null
 appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
 
 #
-# This module specifically tests UI Widgets part of the sci-ui library.
+# This module specifically tests UI Widgets part of the tent library.
 #
-module "SCi.FieldSupport mixin tests", ->
+module "Tent.FieldSupport mixin tests", ->
     @TemplateTests = Ember.Namespace.create()
-    @TemplateTests.MockField = Ember.View.extend SCi.FieldSupport
+    @TemplateTests.MockField = Ember.View.extend Tent.FieldSupport
   , ->
     if view
       Ember.run -> view.destroy()

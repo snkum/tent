@@ -3,6 +3,7 @@
 # All rights reserved.
 #
 
-Tent.translate = (code) ->
-    #Stubbed
-    "t_" + code
+@Tent = {} unless @Tent?
+
+require './util'
+require './view'

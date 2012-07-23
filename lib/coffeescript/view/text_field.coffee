@@ -6,7 +6,7 @@
 require './field_support'
 require '../template/text_field'
 
-SCi.TextField = Ember.View.extend SCi.FieldSupport,
+Tent.TextField = Ember.View.extend Tent.FieldSupport,
   templateName: 'text_field'
-  classNames: ['sci-text-field']
+  classNames: ['tent-text-field']
 

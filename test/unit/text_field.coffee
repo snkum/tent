@@ -9,9 +9,9 @@ view = null
 appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
 
 #
-# This module specifically tests UI Widgets part of the sci-ui library.
+# This module specifically tests UI Widgets part of the tent library.
 #
-module "SCi - Basic Widgets", ->
+module "Tent - Basic Widgets", ->
     @TemplateTests = Ember.Namespace.create()
   , ->
     if view
@@ -21,12 +21,12 @@ module "SCi - Basic Widgets", ->
 
 test 'Ensure TextField renders for text', ->
   view = Ember.View.create
-    template: Ember.Handlebars.compile '{{view SCi.TextField valueBinding="name" labelBinding="label"}}'
+    template: Ember.Handlebars.compile '{{view Tent.TextField valueBinding="name" labelBinding="label"}}'
     name: 'foobar'
     label: 'FooBar'
 
   appendView()
 
   ok view.$('input')?, 'text input field gets rendered'
-  equal view.$('.sci-text-field').length, 1, 'sci-text-field class gets applied'
-  equal view.$('.label').text(), SCi.translate(view.get('label')), 'label is rendered'
+  equal view.$('.tent-text-field').length, 1, 'tent-text-field class gets applied'
+  equal view.$('.label').text(), Tent.translate(view.get('label')), 'label is rendered'

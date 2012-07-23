@@ -1,8 +1,8 @@
-SCi.DEFAULT_STRING_TRUNCATION_LENGTH = 30
+Tent.DEFAULT_STRING_TRUNCATION_LENGTH = 30
 
 Ember.mixin String.prototype, 
   truncate: (maxLength) ->
-    length = Ember.none(maxLength) ? DEFAULT_STRING_TRUNCATION_LENGTH : maxLength
+    length = Ember.none(maxLength) ? Tent.DEFAULT_STRING_TRUNCATION_LENGTH : maxLength
     if (@length <= length)
       @toString()
     else

@@ -5,15 +5,15 @@
 
 require '../util/translation_support'
 
-SCi.FieldSupport = Ember.Mixin.create SCi.TranslationSupport, 
+Tent.FieldSupport = Ember.Mixin.create Tent.TranslationSupport, 
   isMandatory: false
   isVisible: true
   isEditable: true
   fieldClass: 'field'
   
-  isMandatoryAsBoolean: SCi.computed.boolCoerceGently 'isMandatory'
-  isVisibleAsBoolean: SCi.computed.boolCoerceGently 'isVisible'
-  isEditableAsBoolean: SCi.computed.boolCoerceGently 'isEditable'
+  isMandatoryAsBoolean: Tent.computed.boolCoerceGently 'isMandatory'
+  isVisibleAsBoolean: Tent.computed.boolCoerceGently 'isVisible'
+  isEditableAsBoolean: Tent.computed.boolCoerceGently 'isEditable'
 
 
 
@@ -28,7 +28,7 @@ SCi.FieldSupport = Ember.Mixin.create SCi.TranslationSupport,
     'isViewOnly:view-only'
     'hasErrors:error']
 
-  translatedLabel: SCi.computed.translate 'label'
+  translatedLabel: Tent.computed.translate 'label'
 
   validate: ->
     value = this.get('value')  

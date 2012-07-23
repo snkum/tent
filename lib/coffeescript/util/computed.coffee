@@ -3,9 +3,9 @@
 # All rights reserved.
 #
 
-SCi.computed = {} unless SCi.computed?
+Tent.computed = {} unless Tent.computed?
 
-SCi.computed.boolCoerceGently = (dependentKey)->
+Tent.computed.boolCoerceGently = (dependentKey)->
   Ember.computed dependentKey, ((key)->
     value =  @get(dependentKey) || ''
     result = (value.toLowerCase() == 'true') if typeof(value) == 'string'
@@ -13,8 +13,8 @@ SCi.computed.boolCoerceGently = (dependentKey)->
     result
   )
 
-SCi.computed.translate = (dependentKey) ->
+Tent.computed.translate = (dependentKey) ->
   Ember.computed dependentKey, ((key)->
     value =  @get(dependentKey) || ''
-    SCi.translate value 
+    Tent.translate value 
   )

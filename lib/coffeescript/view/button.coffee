@@ -3,10 +3,10 @@
 # All rights reserved.
 #
 
-SCi.Button = Ember.View.extend
+Tent.Button = Ember.View.extend
   classNames: ['btn-group']
   
-  translatedLabel: SCi.translate 'label'
+  translatedLabel: Tent.translate 'label'
   
   hasOptions: (->
     @get('options') != undefined

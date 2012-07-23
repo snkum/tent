@@ -29,4 +29,4 @@ test 'Ensure TextField renders for text', ->
 
   ok view.$('input')?, 'text input field gets rendered'
   equal view.$('.tent-text-field').length, 1, 'tent-text-field class gets applied'
-  equal view.$('.label').text(), Tent.translate(view.get('label')), 'label is rendered'
+  equal view.$('label').text(), Tent.translate(view.get('label')), 'label is rendered'

@@ -1,4 +1,7 @@
-<span class="label">{{view.translatedLabel}}</span>
-<span class='field'>
+<label class="control-label">{{view.translatedLabel}}</label>
+<div class="controls">
     {{view Ember.TextField valueBinding="view.value"}}
-</span>
+    {{#if view.hasErrors}}
+      <span class="help-inline">Please correct the error</span>
+    {{/if}}
+</div>

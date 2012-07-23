@@ -3,7 +3,7 @@
 # All rights reserved.
 #
 
-require 'sci-ui'
+require 'tent'
 
 view = null
 appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
@@ -24,7 +24,7 @@ test 'Mandatory fields identified and enforced', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view TemplateTests.MockField valueBinding="name" labelBinding="label" isMandatory="true"}}'
     name: 'foobar'
-    label: 'Foo Bar'
+    label: 'FooBar'
 
   appendView()
  
@@ -39,7 +39,7 @@ test 'Non-Mandatory fields should not be visually identified', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view TemplateTests.MockField valueBinding="name" labelBinding="label" isMandatory="false"}}'
     name: 'foobar'
-    label: 'Foo Bar'
+    label: 'FooBar'
 
   appendView()
 

@@ -3,7 +3,7 @@
 # All rights reserved.
 #
 
-require 'sci-ui'
+require 'tent'
 
 view = null
 appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
@@ -23,10 +23,10 @@ test 'Ensure TextField renders for text', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view SCi.TextField valueBinding="name" labelBinding="label"}}'
     name: 'foobar'
-    label: 'Foo Bar'
+    label: 'FooBar'
 
   appendView()
 
   ok view.$('input')?, 'text input field gets rendered'
   equal view.$('.sci-text-field').length, 1, 'sci-text-field class gets applied'
-  equal view.$('.label').text(), view.get('label'), 'label is rendered'
+  equal view.$('.label').text(), SCi.translate(view.get('label')), 'label is rendered'

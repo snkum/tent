@@ -4,22 +4,12 @@
 #
 
 require '../util/translation_support'
+require './visibility_support'
+require './validation_support'
+require './mandatory_support'
 
-Tent.FieldSupport = Ember.Mixin.create Tent.TranslationSupport, 
-  isMandatory: false
-  isVisible: true
-  isEditable: true
+Tent.FieldSupport = Ember.Mixin.create Tent.TranslationSupport, Tent.ValidationSupport, Tent.VisibilitySupport, Tent.MandatorySupport, 
   fieldClass: 'field'
-  
-  isMandatoryAsBoolean: Tent.computed.boolCoerceGently 'isMandatory'
-  isVisibleAsBoolean: Tent.computed.boolCoerceGently 'isVisible'
-  isEditableAsBoolean: Tent.computed.boolCoerceGently 'isEditable'
-
-
-
-  isHidden: Ember.computed.not 'isVisibleAsBoolean'
-  isViewOnly: Ember.computed.not 'isEditableAsBoolean'
-
   mixinClasses: 'control-group'
   classNameBindings: [
     'mixinClasses'
@@ -27,21 +17,11 @@ Tent.FieldSupport = Ember.Mixin.create Tent.TranslationSupport,
     'isHidden:hidden'
     'isViewOnly:view-only'
     'hasErrors:error']
+  
+  isEditable: true
+  isEditableAsBoolean: Tent.computed.boolCoerceGently 'isEditable'
+  isViewOnly: Ember.computed.not 'isEditableAsBoolean'
 
   translatedLabel: Tent.computed.translate 'label'
 
-  validate: ->
-    value = this.get('value')  
-    value? && value != ''
-
-  hasErrors: (->
-    !this.validate() if this.validate?
-  ).property('value')
-
-  observesErrors: (->
-    classNames = @get('classNames')
-    if @get('hasErrors')
-      classNames[classNames.length] = 'error' unless classNames.contains('error')
-    else
-      classNames.removeObject 'error'
-  ).observes('hasErrors')
+  hasPrefix: false  

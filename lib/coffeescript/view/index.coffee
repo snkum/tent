@@ -6,3 +6,5 @@
 require './field_support'
 require './text_field'
 require './tag'
+require './numeric_text_field'
+require './amount_field'

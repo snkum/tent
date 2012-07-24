@@ -1,7 +1,11 @@
 <label class="control-label">{{view.translatedLabel}}</label>
 <div class="controls">
+  {{#if view.isEditable}}
     {{view Ember.TextField valueBinding="view.value"}}
-    {{#if view.hasErrors}}
-      <span class="help-inline">Please correct the error</span>
-    {{/if}}
+  {{else}}
+    <span class="uneditable-input">{{view.value}}</span>
+  {{/if}}
+  {{#if view.hasErrors}}
+    <span class="help-inline">Please correct the error</span>
+  {{/if}}
 </div>

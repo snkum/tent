@@ -18,13 +18,15 @@
         loader.require('tent');
 
         Pad = Ember.Application.create();
-        Pad.appName = "Tent"
+        Pad.appName = "Tent Editable"
+        Pad.editableName = "Tent Uneditable"
       })(minispade);
     </script>
 
     <script type="text/x-handlebars">
       <form class="form-horizontal">
-        {{view Tent.TextField valueBinding="Pad.appName" label="AppName"}}
+        {{view Tent.TextField valueBinding="Pad.appName" label="Focused input"}}
+        {{view Tent.TextField valueBinding="Pad.editableName" label="Uneditable input" isEditable=false}}
       </form>
     </script>
 

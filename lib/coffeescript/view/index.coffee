@@ -5,3 +5,4 @@
 
 require './field_support'
 require './text_field'
+require './tag'

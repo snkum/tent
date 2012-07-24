@@ -1,15 +1,15 @@
 <label class="control-label">{{view.translatedLabel}}</label>
 <div class="controls">
-	<div class="input-prepend">
-		{{#if view.hasPrefix}}	
-			<span class="add-on">{{view.prefix}}</span>
-		{{/if}}	    
-  	{{#if view.isEditable}}
-    	{{view Ember.TextField valueBinding="view.value"}}
-  	{{else}}
-    	<span class="uneditable-input">{{view.value}}</span>
-  	{{/if}}
-	</div>
+  <div class="input-prepend">
+    {{#if view.hasPrefix}}  
+      <span class="add-on">{{view.prefix}}</span>
+    {{/if}}     
+    {{#if view.isEditable}}
+      {{view Ember.TextField valueBinding="view.value"}}
+    {{else}}
+      <span class="uneditable-input">{{view.value}}</span>
+    {{/if}}
+  </div>
   {{#if view.hasErrors}}
     <span class="help-inline">{{view.validationErrors}}</span>
   {{/if}}  

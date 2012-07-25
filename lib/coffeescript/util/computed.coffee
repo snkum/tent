@@ -7,10 +7,10 @@ Tent.computed = {} unless Tent.computed?
 
 Tent.computed.boolCoerceGently = (dependentKey)->
   Ember.computed dependentKey, ((key)->
-    value =  @get(dependentKey) || ''
-    result = (value.toLowerCase() == 'true') if typeof(value) == 'string'
-    result = value if typeof(value) == 'boolean'
-    result
+    value =  @get(dependentKey)
+    return value if typeof(value) == "boolean"
+    return value.toBoolean() if typeof(value) == 'string'
+    return value != 0 if typeof(value) == 'number'
   )
 
 Tent.computed.translate = (dependentKey) ->

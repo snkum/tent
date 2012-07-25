@@ -48,11 +48,11 @@ test "previous does not decrement selection when no more elements are available"
     {id:'one', value:1},
     {id:'two', value:2},
     {id:'three', value:3}]
-  myList = Tent.NavigableList.create({
+  myList = Tent.NavigableList.create
     content:myContent
   targetObject = myContent.objectAt(2)
 
-  result = myList.selectItemByProperty('id','three');
+  result = myList.selectItemByProperty('id','three')
   equal targetObject, result, "should be the same"
   equal targetObject, myList.get('selected')
 

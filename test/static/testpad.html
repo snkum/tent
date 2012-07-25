@@ -21,6 +21,16 @@
         Pad = Ember.Application.create();
         Pad.appName = "Tent Editable"
         Pad.editableName = "Tent Uneditable"
+
+        Pad.people = [
+          Ember.Object.create({name: 'Matt', age: 22}),
+          Ember.Object.create({name: 'Raghu', age: 1000})
+        ];
+
+        Tent.Enumeration = {
+          YESNO: ['Yes', 'No'],
+          STATES: ['AL', 'AK', 'CA', 'GA', 'HI']
+        }
       })(minispade);
     </script>
 
@@ -34,7 +44,7 @@
       </form>
       <p>Tag {{view Tent.Tag text="Important"}}</p>
       <h3>Table</h3>
-      {{view Tent.Table}}
+      {{view Tent.Table listBinding="Pad.people" columns="name,age"}}
     </script>
 
   </body>

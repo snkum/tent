@@ -1,0 +1,14 @@
+<thead>
+  <tr>
+    <th>Name</th>
+    <th>Age</th>
+  </tr>
+</thead>
+<tbody>
+  {{#each view.value tagName="tr"}}
+    <tr>
+      <td>{{name}}</td>
+      <td>{{age}}</td>
+    </tr>
+  {{/each}}
+</tbody>

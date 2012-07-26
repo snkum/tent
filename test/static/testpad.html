@@ -34,7 +34,12 @@
           STATES: ['AL', 'AK', 'CA', 'GA', 'HI']
         }
 
-        Pad.content = ["AR", "GA", "AK"]
+      
+        Pad.content = [Ember.Object.create({stateName: "Georgia", stateCode: "GA"}) , 
+                       Ember.Object.create({stateName: "Arkansas", stateCode: "AR"}),
+                       Ember.Object.create({stateName: "Florida", stateCode: "FL"})]  
+
+        Pad.checkGroupContent = ["AP", "AL", "AT"]       
 
       })(minispade);
     </script>
@@ -47,6 +52,10 @@
           {{view Tent.NumericTextField value="10000" label="Numeric input" currency="EUR" isVisible="true"}}
           {{view Tent.AmountField value="10000" label="Amount input" currency="EUR"}}
           {{view Tent.AmountField value="10000" label="Amount Uneditable" currency="EUR" isEditable=false}}
+          {{view Tent.Checkbox label="Agree to privacy policy" checkedBinding="Pad.privacyPolicy"}} : {{Pad.privacyPolicy}}
+          {{view Tent.Checkbox label="Agree to name your first child after me" checkedBinding="Pad.agreeChild"}} : {{Pad.agreeChild}}         
+          {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.stateSelection" label="State" optionLabelPath="content.stateName" optionValuePath="content.stateCode" }}
+          <p>{{Pad.stateSelection.stateName}} : {{Pad.stateSelection.stateCode}}</p>
         {{/view}}
       {{/view}}
       {{#view Tent.Panel span="8" name="Main Content"}}

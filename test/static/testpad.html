@@ -34,7 +34,12 @@
           STATES: ['AL', 'AK', 'CA', 'GA', 'HI']
         }
 
-        Pad.content = ["AR", "GA", "AK"]
+      
+        Pad.content = [Ember.Object.create({stateName: "Georgia", stateCode: "GA"}) , 
+                       Ember.Object.create({stateName: "Arkansas", stateCode: "AR"}),
+                       Ember.Object.create({stateName: "Florida", stateCode: "FL"})]  
+
+        Pad.checkGroupContent = ["AP", "AL", "AT"]       
 
 
       })(minispade);
@@ -51,13 +56,30 @@
         {{view Tent.AmountField value="10000" label="Amount input" currency="EUR"}}
         {{view Tent.AmountField value="10000" label="Amount Uneditable" currency="EUR" isEditable=false}}
         
-        {{view Tent.Checkbox label="Agree to privacy policy" disabled=true }}
-        {{view Tent.Checkbox label="Agree to name your first child after me" }}
+        {{view Tent.Checkbox label="Agree to privacy policy" checkedBinding="Pad.privacyPolicy"}}
+        {{view Tent.Checkbox label="Agree to name your first child after me" checkedBinding="Pad.agreeChild"}}
         
         <!-- Select Testing --> 
-        {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.listSelection" label="" multiple="false" optionLabelPath="content" optionValuePath="content"}}
+        {{view Tent.Select 
+            listBinding="Pad.content" 
+            selectionBinding="Pad.stateSelection" 
+            label="State" 
+            optionLabelPath="content.stateName" 
+            optionValuePath="content.stateCode" 
+            multiple=true}}
 
-        <p> List Selection is {{Pad.listSelection}}</p>
+     
+        {{view Tent.CheckboxGroup 
+              listBinding="Pad.checkGroupContent" 
+              checkedBinding="Pad.checkboxGroupSelection" 
+              label="CheckGroup" }}
+
+        {{#each state in Pad.stateSelection}}
+           {{state.stateName}} : {{state.stateCode}} <br/>
+        {{/each}}
+
+        <p> Privacy Policy Checkbox : {{Pad.privacyPolicy}}</p>
+        <p> Agree Child Checkbox : {{Pad.agreeChild}}</p>
 
       </form>
       <p>Tag {{view Tent.Tag text="Important"}}</p>

@@ -18,6 +18,6 @@ Tent.Select = Ember.View.extend
   ).observes('list.selected')    
 
   _prompt: (-> 
-    if prompt = @get('prompt') then prompt else "Please Select..."
+    if !@get('multiple')
+      if prompt = @get('prompt') then prompt else "Please Select..." 
   ).property('prompt')
-

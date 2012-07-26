@@ -1,0 +1,8 @@
+<label class="control-label">{{view.label}}</label>
+
+<div class="controls">
+  {{#each check in view._list}}
+    {{view Ember.Checkbox  checkedBinding="view.list.selected" disabledBinding = "view.disabled" }} {{check}}
+  {{/each}}
+</div>
+

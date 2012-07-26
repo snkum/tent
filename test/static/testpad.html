@@ -33,16 +33,32 @@
           YESNO: ['Yes', 'No'],
           STATES: ['AL', 'AK', 'CA', 'GA', 'HI']
         }
+
+        Pad.content = ["AR", "GA", "AK"]
+
+
       })(minispade);
     </script>
 
     <script type="text/x-handlebars">
       <form class="form-horizontal">
-        {{view Tent.TextField valueBinding="Pad.appName" label="Focused input"}}
+        <!-- TextField Testing -->
+        {{view Tent.TextField valueBinding="Pad.appName" label="Focused input" }}
         {{view Tent.TextField valueBinding="Pad.editableName" label="Uneditable input" isEditable=false}}
+        <!-- NumericField Testing -->
         {{view Tent.NumericTextField value="10000" label="Numeric input" currency="EUR" isVisible="true"}}
+        <!-- AmountField Testing -->  
         {{view Tent.AmountField value="10000" label="Amount input" currency="EUR"}}
         {{view Tent.AmountField value="10000" label="Amount Uneditable" currency="EUR" isEditable=false}}
+        
+        {{view Tent.Checkbox label="Agree to privacy policy" disabled=true }}
+        {{view Tent.Checkbox label="Agree to name your first child after me" }}
+        
+        <!-- Select Testing --> 
+        {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.listSelection" label="" multiple="false" optionLabelPath="content" optionValuePath="content"}}
+
+        <p> List Selection is {{Pad.listSelection}}</p>
+
       </form>
       <p>Tag {{view Tent.Tag text="Important"}}</p>
       <h3>Table</h3>

@@ -41,7 +41,6 @@
 
         Pad.checkGroupContent = ["AP", "AL", "AT"]       
 
-
       })(minispade);
     </script>
 
@@ -80,6 +79,14 @@
 
         <p> Privacy Policy Checkbox : {{Pad.privacyPolicy}}</p>
         <p> Agree Child Checkbox : {{Pad.agreeChild}}</p>
+
+        {{view Tent.Checkbox label="Agree to privacy policy" disabled=true }}
+        {{view Tent.Checkbox label="Agree to name your first child after me" }}
+        
+        <!-- Select Testing --> 
+        {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.listSelection" label="" multiple="false" optionLabelPath="content" optionValuePath="content"}}
+
+        <p> List Selection is {{Pad.listSelection}}</p>
 
       </form>
       <p>Tag {{view Tent.Tag text="Important"}}</p>

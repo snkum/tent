@@ -5,7 +5,10 @@
 
 Tent.Tag = Ember.View.extend
   tagName: 'span'
-  classNames: ['label', 'label-info']
+  classNames: (->
+    type = @get('type')
+    ['label', if type then 'label-' + type else '']
+  ).property('type')
   template: Ember.Handlebars.compile '{{view.translatedText}}'
 
   translatedText: (->

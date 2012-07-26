@@ -12,9 +12,23 @@ Tent.Table = Ember.View.extend
   _columns: (-> @get('columns').split(',')).property('columns')
   visibleColumns: (-> @get('_columns')).property('_columns')
 
+  init: ->
+    @_super()
+    @set('_list', Tent.SelectableArrayProxy.create({content: @get('list')}))
+
+  select: (selection) ->
+    @set('_list.selected', selection)
+
+  selectionDidChange: (->
+    @set('selection', @get('_list.selected'))
+  ).observes('_list.selected')
+
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
-  defaultTemplate: Ember.Handlebars.compile('{{collection contentBinding="view.parentView.parentView.visibleColumns" itemViewClass="Tent.TableCell"}}')
+  defaultTemplate: Ember.Handlebars.compile('{{collection contentBinding="view.parentTable.visibleColumns" itemViewClass="Tent.TableCell"}}')
+  parentTable: (-> @get('parentView.parentView')).property()
+  mouseUp: ->
+    @get('parentTable').select(@get('content'))
 
 Tent.TableCell = Ember.View.extend
   tagName: 'td'

@@ -27,6 +27,8 @@
           Ember.Object.create({name: 'Raghu', age: 1000})
         ];
 
+        selectedPerson = {}
+
         Tent.Enumeration = {
           YESNO: ['Yes', 'No'],
           STATES: ['AL', 'AK', 'CA', 'GA', 'HI']
@@ -44,7 +46,8 @@
       </form>
       <p>Tag {{view Tent.Tag text="Important"}}</p>
       <h3>Table</h3>
-      {{view Tent.Table listBinding="Pad.people" columns="name,age"}}
+      {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson"}}
+      <p>Selected Person is {{Pad.selectedPerson.name}}</p>
     </script>
 
   </body>

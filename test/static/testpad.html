@@ -47,10 +47,10 @@
     <script type="text/x-handlebars">
       <form class="form-horizontal">
         <!-- TextField Testing -->
-        {{view Tent.TextField valueBinding="Pad.appName" label="Focused input" }}
+        {{view Tent.TextField valueBinding="Pad.appName" label="Focused input" isMandatory=true}}
         {{view Tent.TextField valueBinding="Pad.editableName" label="Uneditable input" isEditable=false}}
         <!-- NumericField Testing -->
-        {{view Tent.NumericTextField value="10000" label="Numeric input" currency="EUR" isVisible="true"}}
+        {{view Tent.NumericTextField value="10000" label="Numeric input" currency="EUR" isVisible="true" isMandatory=true}}
         <!-- AmountField Testing -->  
         {{view Tent.AmountField value="10000" label="Amount input" currency="EUR"}}
         {{view Tent.AmountField value="10000" label="Amount Uneditable" currency="EUR" isEditable=false}}
@@ -70,7 +70,7 @@
      
         {{view Tent.CheckboxGroup 
               listBinding="Pad.checkGroupContent" 
-              checkedBinding="Pad.checkboxGroupSelection" 
+              selectionBinding="Pad.checkboxGroupSelection" 
               label="CheckGroup" }}
 
         {{#each state in Pad.stateSelection}}
@@ -80,16 +80,11 @@
         <p> Privacy Policy Checkbox : {{Pad.privacyPolicy}}</p>
         <p> Agree Child Checkbox : {{Pad.agreeChild}}</p>
 
-        {{view Tent.Checkbox label="Agree to privacy policy" disabled=true }}
-        {{view Tent.Checkbox label="Agree to name your first child after me" }}
-        
-        <!-- Select Testing --> 
-        {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.listSelection" label="" multiple="false" optionLabelPath="content" optionValuePath="content"}}
+        {{view Tent.EmailTextField value="test@test.com" label="Email input" placeholder="Enter email.."}}
 
-        <p> List Selection is {{Pad.listSelection}}</p>
 
       </form>
-      <p>Tag {{view Tent.Tag text="Important"}}</p>
+      <p>Tag {{view Tent.Tag text="Important" type="info"}}</p>
       <h3>Table</h3>
       {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson"}}
       <p>Selected Person is {{Pad.selectedPerson.name}}</p>

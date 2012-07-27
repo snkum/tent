@@ -39,5 +39,5 @@ test 'Ensure it gives no error for numeric values', ->
 
   appendView()
 
-  equal view.$('.error').length, 0, 'error class not applied'
+  equal view.$('.error').length, 0, 'no error class applied'
   equal view.$('.help-inline').text(), '', 'no error received'  

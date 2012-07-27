@@ -2,7 +2,7 @@ testContent = [1,2]
 navList = null
 
 module "NavigableList Tests", ->
-  navList = B.NavigableList.create
+  navList = Tent.NavigableList.create
     content:testContent
 
 test "initial selection is set to first element", ->

@@ -51,7 +51,7 @@ Tent.NavigableList = Tent.SelectableArrayProxy.extend
       previousObject = @objectAtContent(position - 1)
       @set 'selected', previousObject
 
-  selectItemByProperty: ->
+  selectItemByProperty: (propName, value) ->
     result = @filterProperty(propName,value)
     result = if result.length then result[0] else null
     if (result)

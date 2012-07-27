@@ -18,7 +18,7 @@ module "Tent.Tag tests", ->
 
 test 'Ensure TextField renders for text', ->
   view = Ember.View.create
-    template: Ember.Handlebars.compile '{{view Tent.Tag text="important"}}'
+    template: Ember.Handlebars.compile '{{view Tent.Tag text="important" type="info"}}'
 
   appendView()
 

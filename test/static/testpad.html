@@ -45,6 +45,7 @@
     </script>
 
     <script type="text/x-handlebars">
+
       {{#view Tent.Panel span="4"}}
         {{#view Tent.Form name="Fields"}}
           {{view Tent.TextField valueBinding="Pad.appName" label="Focused input"}}
@@ -56,6 +57,7 @@
           {{view Tent.Checkbox label="Agree to name your first child after me" checkedBinding="Pad.agreeChild"}} : {{Pad.agreeChild}}         
           {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.stateSelection" label="State" optionLabelPath="content.stateName" optionValuePath="content.stateCode" }}
           <p>{{Pad.stateSelection.stateName}} : {{Pad.stateSelection.stateCode}}</p>
+          {{view Tent.EmailTextField value="test@test.com" label="Email input" placeholder="Enter email.."}}
         {{/view}}
       {{/view}}
       {{#view Tent.Panel span="8" name="Main Content"}}

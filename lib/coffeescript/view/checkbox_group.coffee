@@ -15,6 +15,6 @@ Tent.CheckboxGroup = Ember.View.extend
 
   checkedDidChange: (->
     console.log @get('list.selected')
-    @set('checked', @get('list.selected'))
+    @set('selection', @get('list.selected'))
   ).observes('list.selected')    
 

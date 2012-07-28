@@ -88,6 +88,10 @@
       <h3>Table</h3>
       {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson"}}
       <p>Selected Person is {{Pad.selectedPerson.name}}</p>
+      {{view Tent.AlertMessage text="Heads up! This alert needs your attention, but it's not super important." type="info"}}
+      {{view Tent.AlertMessage text="Well done! You successfully read this important alert message." type="success"}}
+      {{view Tent.AlertMessage text="Oh snap! Change a few things up and try submitting again." type="error"}}
+
     </script>
 
   </body>

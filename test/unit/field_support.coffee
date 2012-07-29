@@ -45,33 +45,3 @@ test 'Non-Mandatory fields should not be visually identified', ->
 
   ok !view.$('.control-group').hasClass('mandatory'), 'mandatory class was not applied'
 
-test "parentSpan should be able to fetch span when immediate parent is spanned", ->
-  view = Ember.View.create
-    template: Ember.Handlebars.compile '{{view TemplateTests.MockField id="field" valueBinding="name" label="parentSpan Test"}}'
-    span: 5
-
-  appendView()
-
-  equal Ember.View.views.field.parentSpan(), 5, 'parentSpan is fetched correctly when immediate parent has a numeric span'
-
-  view.set('span', '11')
-  equal Ember.View.views.field.parentSpan(), 11, 'parentSpan is fetched correctly when immediate parent has a non-numeric number span'
-
-  view.set('span', 'sfw')
-  equal Ember.View.views.field.parentSpan(), 12, 'parentSpan is estimated correctly when immediate parent has a NaN span'
-
-test "parentSpan should be able to fetch span when a non-immediate parent is spanned", ->
-  view = Ember.View.create
-    template: Ember.Handlebars.compile '{{#view}}{{#view}}{{view TemplateTests.MockField id="field" valueBinding="name" label="parentSpan Test"}}{{/view}}{{/view}}'
-    span: 5
-
-  appendView()
-
-  equal Ember.View.views.field.parentSpan(), 5, 'parentSpan is fetched correctly when immediate parent has a numeric span'
-
-  view.set('span', '11')
-  equal Ember.View.views.field.parentSpan(), 11, 'parentSpan is fetched correctly when immediate parent has a non-numeric number span'
-
-  view.set('span', 'sfw')
-  equal Ember.View.views.field.parentSpan(), 12, 'parentSpan is estimated correctly when immediate parent has a NaN span'
-

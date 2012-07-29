@@ -3,6 +3,7 @@
 # All rights reserved.
 #
 
+require './span_support'
 require './field_support'
 require './text_field'
 require './tag'

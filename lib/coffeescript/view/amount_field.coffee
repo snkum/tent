@@ -13,7 +13,7 @@ Tent.AmountField = Tent.NumericTextField.extend
   ).property('currency')
   
   inputSizeClass: (->
-    return Tent.AmountField.SIZE_CLASSES[@parentSpan() - 1]
+    return Tent.AmountField.SIZE_CLASSES[@estimateSpan() - 1]
   ).property()
 
 Tent.AmountField.SIZE_CLASSES = [

@@ -7,8 +7,9 @@ require '../util/translation_support'
 require './visibility_support'
 require './validation_support'
 require './mandatory_support'
+require './span_support'
 
-Tent.FieldSupport = Ember.Mixin.create Tent.TranslationSupport, Tent.ValidationSupport, Tent.VisibilitySupport, Tent.MandatorySupport, 
+Tent.FieldSupport = Ember.Mixin.create Tent.SpanSupport, Tent.TranslationSupport, Tent.ValidationSupport, Tent.VisibilitySupport, Tent.MandatorySupport, 
   fieldClass: 'field'
   mixinClasses: 'control-group'
   classNameBindings: [
@@ -26,17 +27,8 @@ Tent.FieldSupport = Ember.Mixin.create Tent.TranslationSupport, Tent.ValidationS
 
   hasPrefix: false  
 
-  parentSpan: ->
-    parentView = @get('parentView')
-    while (parentView)
-      span = Number(parentView.get('span'))
-      unless (span == 0) || isNaN(span)
-        return span
-      parentView = parentView.get('parentView')
-    12
-
   inputSizeClass: (->
-    return Tent.FieldSupport.SIZE_CLASSES[@parentSpan() - 1]
+    return Tent.FieldSupport.SIZE_CLASSES[@estimateSpan() - 1]
   ).property()
 
   unEditableClass: (-> 'uneditable-input' unless @get('isEditable')).property('isEditable')

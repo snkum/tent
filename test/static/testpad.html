@@ -53,11 +53,9 @@
           {{view Tent.NumericTextField value="10000" label="Numeric input" currency="EUR" isVisible="true"}}
           {{view Tent.AmountField value="10000" label="Amount input" currency="EUR"}}
           {{view Tent.AmountField value="10000" label="Amount Uneditable" currency="EUR" isEditable=false}}
-          {{view Tent.Checkbox label="Agree to privacy policy" checkedBinding="Pad.privacyPolicy"}} : {{Pad.privacyPolicy}}
-          {{view Tent.Checkbox label="Agree to name your first child after me" checkedBinding="Pad.agreeChild"}} : {{Pad.agreeChild}}         
           {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.stateSelection" label="State" optionLabelPath="content.stateName" optionValuePath="content.stateCode" }}
-          <p>{{Pad.stateSelection.stateName}} : {{Pad.stateSelection.stateCode}}</p>
           {{view Tent.EmailTextField value="test@test.com" label="Email input" placeholder="Enter email.."}}
+          {{view Tent.Checkbox label="Agree to privacy policy" checkedBinding="Pad.privacyPolicy"}}
         {{/view}}
       {{/view}}
       {{#view Tent.Panel span="8" name="Main Content"}}
@@ -65,11 +63,12 @@
         <h3>Table</h3>
         {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson"}}
         <p>Selected Person is {{Pad.selectedPerson.name}}</p>
-      {{/view}}
+        <p>Selected State : {{Pad.stateSelection.stateName}} : {{Pad.stateSelection.stateCode}}</p>
 
-      {{view Tent.AlertMessage text="Heads up! This alert needs your attention, but it's not super important." type="info"}}
-      {{view Tent.AlertMessage text="Well done! You successfully read this important alert message." type="success"}}
-      {{view Tent.AlertMessage text="Oh snap! Change a few things up and try submitting again." type="error"}}
+        {{view Tent.AlertMessage text="Heads up! This alert needs your attention, but it's not super important." type="info"}}
+        {{view Tent.AlertMessage text="Well done! You successfully read this important alert message." type="success"}}
+        {{view Tent.AlertMessage text="Oh snap! Change a few things up and try submitting again." type="error"}}
+      {{/view}}
 
       {{view Tent.ModalPane text="Do you want to perform this action!!!" header="My Heading" primary="OK" secondary="Cancel"}}
 

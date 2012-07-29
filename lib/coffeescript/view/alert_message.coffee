@@ -6,7 +6,7 @@
 Tent.AlertMessage = Ember.View.extend
   tagName: 'div'
   classNames: ['alert']
-  template: Ember.Handlebars.compile '<a href="#" class="close" rel="close">x</a>{{view.translatedText}}'
+  template: Ember.Handlebars.compile '<a href="#" class="close" close="close">x</a>{{view.translatedText}}'
 
 # type --- error/success/info/block  
   init: ->
@@ -21,8 +21,5 @@ Tent.AlertMessage = Ember.View.extend
 
   click: (event)->
     target = event.target
-    targetRel = target.getAttribute('rel')
-
-    if targetRel == 'close'
-      @destroy()
-      false
+    targetClose = target.getAttribute('close')
+    (@destroy(); false) if targetClose == 'close' 

@@ -2,7 +2,7 @@ testContent = [1,2]
 navList = null
 
 module "NavigableList Tests", ->
-  navList = B.NavigableList.create
+  navList = Tent.NavigableList.create
     content:testContent
 
 test "initial selection is set to first element", ->
@@ -44,18 +44,6 @@ test "previous does not decrement selection when no more elements are available"
   equal navList.get('selected'), targetObject, "should be equal"
 
 test "previous does not decrement selection when no more elements are available", ->
-  myContent = [
-    {id:'one', value:1},
-    {id:'two', value:2},
-    {id:'three', value:3}]
-  myList = Tent.NavigableList.create
-    content:myContent
-  targetObject = myContent.objectAt(2)
-
-  result = myList.selectItemByProperty('id','three')
-  equal targetObject, result, "should be the same"
-  equal targetObject, myList.get('selected')
-
-
-
-
+  targetObject = testContent.objectAt 0
+  navList.previous()
+  equal navList.get('selected'), targetObject, "should be equal"

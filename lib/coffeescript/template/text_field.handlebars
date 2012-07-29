@@ -5,9 +5,9 @@
       <span class="add-on">{{view.prefix}}</span>
     {{/if}}     
     {{#if view.isEditable}}
-      {{view Ember.TextField valueBinding="view.value"}}
+      {{view Ember.TextField classBinding="view.inputSizeClass" valueBinding="view.value"}}
     {{else}}
-      <span class="uneditable-input">{{view.value}}</span>
+      <span {{bindAttr class="view.unEditableClass view.inputSizeClass"}}>{{view.value}}</span>
     {{/if}}
   </div>
   {{#if view.hasErrors}}

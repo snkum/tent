@@ -37,17 +37,21 @@
     </script>
 
     <script type="text/x-handlebars">
-      <form class="form-horizontal">
-        {{view Tent.TextField valueBinding="Pad.appName" label="Focused input"}}
-        {{view Tent.TextField valueBinding="Pad.editableName" label="Uneditable input" isEditable=false}}
-        {{view Tent.NumericTextField value="10000" label="Numeric input" currency="EUR" isVisible="true"}}
-        {{view Tent.AmountField value="10000" label="Amount input" currency="EUR"}}
-        {{view Tent.AmountField value="10000" label="Amount Uneditable" currency="EUR" isEditable=false}}
-      </form>
-      <p>Tag {{view Tent.Tag text="Important"}}</p>
-      <h3>Table</h3>
-      {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson"}}
-      <p>Selected Person is {{Pad.selectedPerson.name}}</p>
+      {{#view Tent.Panel span="4"}}
+        {{#view Tent.Form name="Fields"}}
+          {{view Tent.TextField valueBinding="Pad.appName" label="Focused input"}}
+          {{view Tent.TextField valueBinding="Pad.editableName" label="Uneditable input" isEditable=false}}
+          {{view Tent.NumericTextField value="10000" label="Numeric input" currency="EUR" isVisible="true"}}
+          {{view Tent.AmountField value="10000" label="Amount input" currency="EUR"}}
+          {{view Tent.AmountField value="10000" label="Amount Uneditable" currency="EUR" isEditable=false}}
+        {{/view}}
+      {{/view}}
+      {{#view Tent.Panel span="8" name="Main Content"}}
+        <p>Tag {{view Tent.Tag text="Important"}}</p>
+        <h3>Table</h3>
+        {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson"}}
+        <p>Selected Person is {{Pad.selectedPerson.name}}</p>
+      {{/view}}
     </script>
 
   </body>

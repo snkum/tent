@@ -4,10 +4,16 @@
 #
 
 Tent.Button = Ember.View.extend
-  classNames: ['btn-group']
-  
-  translatedLabel: Tent.translate 'label'
-  
-  hasOptions: (->
-    @get('options') != undefined
-  ).property('options')
+  classNames : ['btn']
+  tagName : 'button'
+  template: Ember.Handlebars.compile '{{view.translatedLabel}}'
+
+  init: ->
+    @_super()
+    type = @get('type')
+    classNames = @get('classNames')
+    classNames.push('btn-' + type) if type  
+
+  translatedLabel: (->
+    Tent.translate @get('label')
+  ).property('label')      

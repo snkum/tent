@@ -39,7 +39,13 @@
                        Ember.Object.create({stateName: "Arkansas", stateCode: "AR"}),
                        Ember.Object.create({stateName: "Florida", stateCode: "FL"})]  
 
-        Pad.checkGroupContent = ["AP", "AL", "AT"]       
+        Pad.checkGroupContent = ["AP", "AL", "AT"]  
+
+        Pad.actions1 = ["Edit", "Delete", "Ban"]   
+
+        Pad.btnOptions = [Ember.Object.create({label: "Add", target: "showAdd"}),
+                      Ember.Object.create({label: "Edit", target: "showEdit"}),
+                      Ember.Object.create({label: "Delete", target: "showDelete"})]  
 
       })(minispade);
     </script>
@@ -56,6 +62,10 @@
           {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.stateSelection" label="State" optionLabelPath="content.stateName" optionValuePath="content.stateCode" }}
           {{view Tent.EmailTextField value="test@test.com" label="Email input" placeholder="Enter email.."}}
           {{view Tent.Checkbox label="Agree to privacy policy" checkedBinding="Pad.privacyPolicy"}}
+          {{view Tent.Button label="Primary" type="primary" }}
+          {{view Tent.Button label="Danger" type="danger"}}
+          {{view Tent.Button label="Warning" type="warning"}}<br/><br/>
+          {{view Tent.ButtonGroup label="User" optionsBinding="Pad.btnOptions" optionLabelPath="label" optionTargetPath="target" }}
         {{/view}}
       {{/view}}
       {{#view Tent.Panel span="8" name="Main Content"}}
@@ -68,11 +78,13 @@
         {{view Tent.AlertMessage text="Heads up! This alert needs your attention, but it's not super important." type="info"}}
         {{view Tent.AlertMessage text="Well done! You successfully read this important alert message." type="success"}}
         {{view Tent.AlertMessage text="Oh snap! Change a few things up and try submitting again." type="error"}}
-        {{view Tent.ProgressBar isStriped=true progress="50" isAnimated=true}}
+        {{view Tent.ProgressBar isStriped=true progress="50" isAnimated=true clear="10"}}
     
       {{/view}}
 
       {{view Tent.ModalPane text="Do you want to perform this action!!!" header="My Heading" primary="OK" secondary="Cancel"}}
+
+
 
     </script>
 

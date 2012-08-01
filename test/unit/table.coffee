@@ -12,14 +12,8 @@ appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
 #
 setup = (->
   @TemplateTests = Ember.Namespace.create()
-  view = Ember.View.create
-    template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people" columns="name,age" selectionBinding="selectedPerson"}}'
-    people: [Ember.Object.create({name: 'Matt', age: 22}),
-          Ember.Object.create({name: 'Raghu', age: 1000}),
-          Ember.Object.create({name: 'Sakshi', age: 21})];
-  appendView()
-
 )
+
 teardown = ( ->
     if view
       Ember.run -> view.destroy()
@@ -40,7 +34,10 @@ test 'Ensure Table is rendered', ->
   ok view.$('table')?, 'table gets rendered'
   ok view.$('thead')?, 'header gets rendered'
   ok view.$('tbody')?, 'body gets rendered'
-  equal view.get('childViews').objectAt(0).get('childViews').objectAt(1).get('childViews').length, 3, 'all the elements get rendered'
+  rows = view.get('childViews').objectAt(0).get('childViews').objectAt(1).get('childViews') 
+  equal rows.length, 3, 'all the rows get rendered'
+  equal rows.objectAt(0).get('childViews').objectAt(0).get('childViews').objectAt(0).$().text(), "Matt", 'Name column gets rendered'
+  equal rows.objectAt(0).get('childViews').objectAt(0).get('childViews').objectAt(1).$().text(), "22", 'Age column gets rendered'
   equal view.get('childViews').objectAt(0).get('selection'), undefined, 'none of the rows is selected' 
   
 test 'Ensure Selection', ->

@@ -10,6 +10,7 @@ appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
 #
 # This module specifically tests UI Widgets part of the tent library.
 #
+
 setup = (->
   @TemplateTests = Ember.Namespace.create()
 )
@@ -19,9 +20,9 @@ teardown = ( ->
       Ember.run -> view.destroy()
       view = null
     @TemplateTests = undefined
-
 )
-module "Tent - Basic Widgets", setup, teardown
+
+module "Tent - Basic Widgets - table", setup, teardown
 
 test 'Ensure Table is rendered', ->
   view = Ember.View.create

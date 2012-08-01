@@ -10,6 +10,7 @@ appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
 #
 # This module specifically tests UI Widgets part of the tent library.
 #
+
 setup = (->
   @TemplateTests = Ember.Namespace.create()
 )

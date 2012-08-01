@@ -2,21 +2,21 @@
 # Copyright PrimeRevenue, Inc. 2012
 # All rights reserved.
 #
+require '../template/button'
 
 Tent.Button = Ember.View.extend
-  label: 'Default'
-  type: ''
+  templateName: 'button'
+  label: 'Button'
+  type: null
   isDisabled: false
-  event: null
-  classNames: ->
-    classes = (if @get("hasOptions") then ["btn-group"] else ((if (type = @get("type")) isnt null and @BUTTON_CLASSES.indexOf("btn-" + type) isnt -1 then ["btn-" + type] else [])))
-    classes.push('disabled') if @get("isDisabled")
+  isDisabledAsBoolean: Tent.computed.boolCoerceGently 'isDisabled'
+  action: null
+  target: null
+  classes: (->
+    classes = (if @get("hasOptions") then ["btn-group"] else ((if (type = @get("type")) isnt null and @BUTTON_CLASSES.indexOf(type.toLowerCase()) isnt -1 then "btn btn-" + type.toLowerCase() else 'btn')))
+    classes = classes+" "+"disabled" if @get("isDisabledAsBoolean")
     return classes
-  translatedLabel: Tent.translate 'label'
-  attributesBinding: ['isDisabled:disabled']
-  click: (event)->
-    #TODO  event.target is this and @get "event" isnt null
-     
+  ).property('type','hasOptions')   
   hasOptions: (->
     @get('options') != undefined
   ).property('options')
@@ -28,4 +28,3 @@ Tent.Button = Ember.View.extend
     'danger',
     'inverse'
     ]
-  

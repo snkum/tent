@@ -47,6 +47,22 @@
                       Ember.Object.create({label: "Edit", target: "showEdit"}),
                       Ember.Object.create({label: "Delete", target: "showDelete"})]  
 
+        Pad.targetObj = Ember.Object.create({
+          primaryEvent: function(){
+            alert("button primary clicked");
+            return false
+          },
+          dangerEvent: function(){
+            alert("button danger clicked");
+            return false
+          },     
+          warningEvent: function(){
+            alert("button warning clicked");
+            return false
+          } 
+        })              
+
+
       })(minispade);
     </script>
 
@@ -62,9 +78,9 @@
           {{view Tent.Select listBinding="Pad.content" selectionBinding="Pad.stateSelection" label="State" optionLabelPath="content.stateName" optionValuePath="content.stateCode" }}
           {{view Tent.EmailTextField value="test@test.com" label="Email input" placeholder="Enter email.."}}
           {{view Tent.Checkbox label="Agree to privacy policy" checkedBinding="Pad.privacyPolicy"}}
-          {{view Tent.Button label="Primary" type="primary" }}
-          {{view Tent.Button label="Danger" type="danger"}}
-          {{view Tent.Button label="Warning" type="warning"}}<br/><br/>
+          {{view Tent.Button label="Primary" type="primary" action="primaryEvent" target="Pad.targetObj"}}
+          {{view Tent.Button label="Danger" type="danger" action="dangerEvent" target="Pad.targetObj"}}
+          {{view Tent.Button label="Warning" type="warning" action="warningEvent" target="Pad.targetObj"}}<br/><br/>
           {{view Tent.ButtonGroup label="User" optionsBinding="Pad.btnOptions" optionLabelPath="label" optionTargetPath="target" }}
         {{/view}}
       {{/view}}

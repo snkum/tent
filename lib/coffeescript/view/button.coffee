@@ -3,7 +3,7 @@
 # All rights reserved.
 #
 
-Tent.Button = Ember.View.extend
+Tent.Button = Ember.View.extend Ember.TargetActionSupport,
   classNames : ['btn']
   tagName : 'button'
   template: Ember.Handlebars.compile '{{view.translatedLabel}}'
@@ -17,3 +17,7 @@ Tent.Button = Ember.View.extend
   translatedLabel: (->
     Tent.translate @get('label')
   ).property('label')      
+
+  click:(event)->
+    @triggerAction()
+    

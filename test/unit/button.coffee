@@ -26,4 +26,20 @@ test 'Ensure Button renders', ->
   ok view.$('button')?, 'button got rendered'
   ok view.$('button').hasClass('btn'), 'btn class gets applied'
   ok view.$('button').hasClass("btn-"+view.get('type')+""), 'type class gets applied'  
+
+test 'Button Action triggered', ->
+  expect(2)
+
+  button = Tent.Button.create( 
+    target: Ember.Object.create(
+      submit: ->
+        ok true, "submit method called"
+    )
+    label: 'primary'
+    type: 'type'
+    action: 'submit'  
+  )  
   
+  ok true == button.click(), "button click invoked"
+
+

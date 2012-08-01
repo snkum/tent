@@ -6,7 +6,7 @@
 require '../template/table'
 
 Tent.Table = Ember.View.extend
-  classNames: ['table', 'table-striped', 'table-bordered', 'table-condensed']
+  classNames: ['table', 'table-bordered', 'table-condensed']
   tagName: 'table'
   templateName: 'table'
   _columns: (-> @get('columns').split(',')).property('columns')
@@ -15,6 +15,9 @@ Tent.Table = Ember.View.extend
   init: ->
     @_super()
     @set('_list', Tent.SelectableArrayProxy.create({content: @get('list')}))
+
+  isRowSelected: (row) ->
+    row.get('content') == @get('_list.selected')
 
   select: (selection) ->
     @set('_list.selected', selection)
@@ -26,9 +29,14 @@ Tent.Table = Ember.View.extend
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
   defaultTemplate: Ember.Handlebars.compile('{{collection contentBinding="view.parentTable.visibleColumns" itemViewClass="Tent.TableCell"}}')
+  classNameBindings: [
+    'isSelected:tent-selected']
+
   parentTable: (-> @get('parentView.parentView')).property()
+  isSelected: (-> @get('parentTable').isRowSelected(this)).property('parentTable.selection')
   mouseUp: ->
     @get('parentTable').select(@get('content'))
+  
 
 Tent.TableCell = Ember.View.extend
   tagName: 'td'

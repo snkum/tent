@@ -43,9 +43,9 @@
 
         Pad.actions1 = ["Edit", "Delete", "Ban"]   
 
-        Pad.btnOptions = [Ember.Object.create({label: "Add", target: "showAdd"}),
-                      Ember.Object.create({label: "Edit", target: "showEdit"}),
-                      Ember.Object.create({label: "Delete", target: "showDelete"})]  
+        Pad.btnOptions = [Ember.Object.create({label: "Add", target: "Pad.groupTarget", action: "add"}),
+                      Ember.Object.create({label: "Edit", target: "Pad.groupTarget", action: "edit"}),
+                      Ember.Object.create({label: "Delete", target: "Pad.groupTarget", action: "delete"})]  
 
         Pad.targetObj = Ember.Object.create({
           primaryEvent: function(){
@@ -62,6 +62,20 @@
           } 
         })              
 
+        Pad.groupTarget = Ember.Object.create({
+          add: function(){
+            alert("action add clicked");
+            return false
+          },
+          edit: function(){
+            alert("action edit clicked");
+            return false
+          },     
+          delete: function(){
+            alert("action delete clicked");
+            return false
+          } 
+        })              
 
       })(minispade);
     </script>
@@ -81,7 +95,7 @@
           {{view Tent.Button label="Primary" type="primary" action="primaryEvent" target="Pad.targetObj"}}
           {{view Tent.Button label="Danger" type="danger" action="dangerEvent" target="Pad.targetObj"}}
           {{view Tent.Button label="Warning" type="warning" action="warningEvent" target="Pad.targetObj"}}<br/><br/>
-          {{view Tent.ButtonGroup label="User" optionsBinding="Pad.btnOptions" optionLabelPath="label" optionTargetPath="target" }}
+          {{view Tent.ButtonGroup label="Actions" optionsBinding="Pad.btnOptions" optionLabelPath="label" optionTargetPath="target" optionActionPath="action"}}
         {{/view}}
       {{/view}}
       {{#view Tent.Panel span="8" name="Main Content"}}

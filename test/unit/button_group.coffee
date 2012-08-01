@@ -25,7 +25,6 @@ test 'Ensure ButtonGroup renders', ->
       Ember.Object.create({label: 'Delete',  target: 'showDelete'})
     ]
 
-
   view = Ember.View.create
     app: application
     template: Ember.Handlebars.compile '{{view Tent.ButtonGroup 
@@ -40,4 +39,4 @@ test 'Ensure ButtonGroup renders', ->
   ok view.$('div a').hasClass('dropdown-toggle'), 'dropdown-toggle classes gets applied'
   equal view.$('li').length, application.btnOptions.length, 'options rendered'  
   equal view.$('li').text().trim(), 'AddEditDelete' , 'options value rendered'
-  ok view.$("a.btn-primary:contains('"+Tent.translate(view.get('label'))+"')").length > 0 , 'label rendered' 
+  ok view.$("a.btn-primary:contains('"+view.get('label')+"')").length > 0 , 'label rendered' 

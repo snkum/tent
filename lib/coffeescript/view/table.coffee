@@ -39,9 +39,7 @@ Tent.TableRow = Ember.View.extend
   
   mouseUp: ->
     @get('parentTable').select(@get('content'))
-    @$('input').prop('checked',true) if !(@$('input').prop('checked'))
-    
-    
+  
 Tent.TableCell = Ember.View.extend
   tagName: 'td'
   classNameBindings: ['isRadio:tent-width-small']

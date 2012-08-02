@@ -13,8 +13,8 @@ Tent.Button = Ember.View.extend
   action: null
   target: null
   classes: (->
-    classes = (if @get("hasOptions") then ["btn-group"] else ((if (type = @get("type")) isnt null and @BUTTON_CLASSES.indexOf(type.toLowerCase()) isnt -1 then "btn btn-" + type.toLowerCase() else 'btn')))
-    classes = classes+" "+"disabled" if @get("isDisabledAsBoolean")
+    classes = (if @get("hasOptions") then ["btn-group"] else ((if (type = @get("type")) isnt null and @BUTTON_CLASSES.indexOf(type.toLowerCase()) isnt -1 then "btn-" + type.toLowerCase() else "")))
+    classes = classes+" "+"disabled" if @get("isDisabled")
     return classes
   ).property('type','hasOptions')   
   hasOptions: (->
@@ -28,3 +28,15 @@ Tent.Button = Ember.View.extend
     'danger',
     'inverse'
     ]
+  
+Tent.ButtonElement = Ember.Button.extend Ember.TargetActionSupport,
+  classNameBindings: ["parentView.classes"] 
+  attributeBindings: ["parentView.isDisabledAsBoolean:disabled"] 
+  action: (->
+    Em.getPath(this,"parentView.action")
+  ).property() 
+  target:(->
+    Em.getPath(this,"parentView.target")
+  ).property()
+  click: ->
+    @triggerAction()

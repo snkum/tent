@@ -1,6 +1,6 @@
-<button {{bindAttr class="view.classes" disabled="view.isDisabledAsBoolean"}} {{action view.action target="view.target"}}>
-	{{view.label}}
-</button>
+{{#view Tent.ButtonElement class="btn"}}
+  {{view.parentView.label}}
+{{/view}}
 {{#if view.hasOptions}}
   {{#view Ember.Button class="btn dropdown-toggle" data-toggle="dropdown"}}
     <span class="caret"></span>

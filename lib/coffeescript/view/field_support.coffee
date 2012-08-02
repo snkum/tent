@@ -29,6 +29,22 @@ Tent.FieldSupport = Ember.Mixin.create Tent.SpanSupport, Tent.TranslationSupport
     return Tent.FieldSupport.SIZE_CLASSES[@estimateSpan() - 1]
   ).property()
 
+  widthExpectation: (->
+    formStyle = @get('form.formStyle')
+    fieldSize = Tent.FieldSupport.SIZE_MAP[@get('inputSizeClass')]
+    if formStyle == 'horizontal' then fieldSize + 150 else Math.max(fieldSize, 150) 
+  ).property('form')
+  		
+  form: (->
+    Ember.View.views[@$().closest('form').attr('id')]
+  ).property()
+
+  didInsertElement: ->
+  	@_super()
+  	form = @get('form')
+  	if form isnt undefined
+  	  form.set('formStyle', 'vertical') if @get('widthExpectation') > form.$().width()
+  	
   unEditableClass: (-> 'uneditable-input' unless @get('isEditable')).property('isEditable')
 
 Tent.FieldSupport.SIZE_CLASSES = [
@@ -45,3 +61,11 @@ Tent.FieldSupport.SIZE_CLASSES = [
   'input-xxlarge',
   'input-xxlarge',
 ]
+
+Tent.FieldSupport.SIZE_MAP =
+  'input-mini': 60
+  'input-small': 90
+  'input-medium': 150
+  'input-large': 210
+  'input-xlarge': 270
+  'input-xxlarge': 530

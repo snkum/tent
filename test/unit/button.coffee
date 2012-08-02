@@ -4,7 +4,7 @@
 #
 
 require 'tent'
-TestObject = {display: function(){console.log("Event fired")}}
+
 view = null
 appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
 setup = ->

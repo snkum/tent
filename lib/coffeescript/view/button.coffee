@@ -4,17 +4,23 @@
 #
 require '../template/button'
 
-Tent.Button = Ember.View.extend
+Tent.Button = Ember.View.extend Ember.TargetActionSupport,
   templateName: 'button'
   label: 'Button'
   type: null
   isDisabled: false
-  isDisabledAsBoolean: Tent.computed.boolCoerceGently 'isDisabled'
   action: null
-  target: null
+  targetObject: (->
+    if (target = @get('target'))
+      return Em.get(target)
+    else
+      return @get('context')
+  ).property('target', 'context')
+  triggerAction: ->
+    @_super() if !@isDisabled
   classes: (->
-    classes = (if @get("hasOptions") then ["btn-group"] else ((if (type = @get("type")) isnt null and @BUTTON_CLASSES.indexOf(type.toLowerCase()) isnt -1 then "btn-" + type.toLowerCase() else "")))
-    classes = classes+" "+"disabled" if @get("isDisabled")
+    classes = (if @get("hasOptions") then ["btn-group"] else ((if (type = @get("type")) isnt null and @BUTTON_CLASSES.indexOf(type.toLowerCase()) isnt -1 then "btn btn-" + type.toLowerCase() else "btn")))
+    classes = classes+" disabled" if @get("isDisabled")
     return classes
   ).property('type','hasOptions')   
   hasOptions: (->
@@ -28,15 +34,4 @@ Tent.Button = Ember.View.extend
     'danger',
     'inverse'
     ]
-  
-Tent.ButtonElement = Ember.Button.extend Ember.TargetActionSupport,
-  classNameBindings: ["parentView.classes"] 
-  attributeBindings: ["parentView.isDisabledAsBoolean:disabled"] 
-  action: (->
-    Em.getPath(this,"parentView.action")
-  ).property() 
-  target:(->
-    Em.getPath(this,"parentView.target")
-  ).property()
-  click: ->
-    @triggerAction()
+ 

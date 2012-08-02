@@ -35,7 +35,7 @@ test 'Ensure ModalPane renders ', ->
   ok view.$('div').hasClass('modal-body'), 'modal-body class gets applied'  
   ok view.$('div').hasClass('modal-footer'), 'modal-footer class gets applied'  
 
-  ok view.$("div.modal-header:contains('"+Tent.translate(view.get('header'))+"')").length > 0 , 'header rendered' 
-  equal view.$('.modal-body').text().trim(), Tent.translate(view.get('text')), 'body is rendered' 
+  ok view.$("div.modal-header:contains('"+view.get('header')+"')").length > 0 , 'header rendered' 
+  equal view.$('.modal-body').text().trim(), view.get('text'), 'body is rendered' 
   ok view.$("div.modal-footer:contains('"+view.get('primary')+"')").length > 0 , 'footer rendered primary'
   ok view.$("div.modal-footer:contains('"+view.get('secondary')+"')").length > 0 , 'footer rendered secondary'   

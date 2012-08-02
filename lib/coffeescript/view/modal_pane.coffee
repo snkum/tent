@@ -17,14 +17,6 @@ Tent.ModalPane = Ember.View.extend
   secondary:null
   showBackdrop:true
 
-  translatedText: (->
-    Tent.translate @get('text')
-  ).property('text')
-
-  translatedHeader: (->
-    Tent.translate @get('header')
-  ).property('header')
-
   click: (event)->
     target = event.target
     targetClick = target.getAttribute('click')
@@ -42,8 +34,8 @@ Tent.ModalPane = Ember.View.extend
 
 Tent.ModalHeader = Ember.View.extend
   tagName: 'h3'
-  defaultTemplate: Ember.Handlebars.compile '{{view.parentView.translatedHeader}}'
+  defaultTemplate: Ember.Handlebars.compile '{{view.parentView.header}}'
 
 Tent.ModalBody = Ember.View.extend
   tagName: 'p'
-  defaultTemplate: Ember.Handlebars.compile '{{view.parentView.translatedText}}'  
+  defaultTemplate: Ember.Handlebars.compile '{{view.parentView.text}}'  

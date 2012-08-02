@@ -6,8 +6,6 @@
 Tent.Button = Ember.View.extend
   classNames: ['btn-group']
   
-  translatedLabel: Tent.translate 'label'
-  
   hasOptions: (->
     @get('options') != undefined
   ).property('options')

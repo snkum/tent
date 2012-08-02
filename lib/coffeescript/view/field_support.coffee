@@ -23,8 +23,6 @@ Tent.FieldSupport = Ember.Mixin.create Tent.SpanSupport, Tent.TranslationSupport
   isEditableAsBoolean: Tent.computed.boolCoerceGently 'isEditable'
   isViewOnly: Ember.computed.not 'isEditableAsBoolean'
 
-  translatedLabel: Tent.computed.translate 'label'
-
   hasPrefix: false  
 
   inputSizeClass: (->

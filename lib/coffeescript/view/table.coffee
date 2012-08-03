@@ -10,13 +10,7 @@ Tent.Table = Ember.View.extend
   tagName: 'table'
   templateName: 'table'
   _columns: (-> 
-<<<<<<< HEAD
     @get('columns').split(',')
-=======
-    x = @get('columns').split(',')
-    x.unshift ''
-    x
->>>>>>> added radio buttons. gets checked on row selection
     ).property('columns')
   visibleColumns: (-> @get('_columns')).property('_columns')
 
@@ -45,24 +39,15 @@ Tent.TableRow = Ember.View.extend
   
   mouseUp: ->
     @get('parentTable').select(@get('content'))
-<<<<<<< HEAD
-  
-=======
-    @$('input').prop('checked',true) 
-    
-    
->>>>>>> added radio buttons. gets checked on row selection
+    @$('input').prop('checked',true) if !(@$('input').prop('checked'))
+
 Tent.TableCell = Ember.View.extend
   tagName: 'td'
   classNameBindings: ['isRadio:tent-width-small']
   defaultTemplate: Ember.Handlebars.compile('{{view.value}}')
   value: (->
-    if @content == ''
-      # @set('isRadio',true)
-      row = new Handlebars.SafeString('\<input type=\'radio\' name=\'selection\'\>')   
-    else
-      row = @get('parentView.parentView.content')
-      if row then row[@get('content')] else ''
+    row = @get('parentView.parentView.content')
+    if row then row[@get('content')] else ''
   ).property('content', 'parentView')
 
 Tent.TableHeader = Ember.View.extend
@@ -70,5 +55,5 @@ Tent.TableHeader = Ember.View.extend
   defaultTemplate: Ember.Handlebars.compile('{{view.printableColumnName}}')
   printableColumnName: (->
     columnName = @get('content')
-    columnName.camelToWords() if typeof(columnName) == 'string' && columnName isnt ''
+    columnName.camelToWords() if typeof(columnName) == 'string'
   ).property('content')

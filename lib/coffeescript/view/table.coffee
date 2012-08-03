@@ -4,7 +4,7 @@
 #
 
 require '../template/table'
-require '../template/row'
+require '../template/table_row'
 
 Tent.Table = Ember.View.extend
   classNames: ['table', 'table-bordered', 'table-condensed']
@@ -31,7 +31,7 @@ Tent.Table = Ember.View.extend
 
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
-  templateName: 'row'
+  templateName: 'table_row'
   classNameBindings: [
     'isSelected:tent-selected']
 

@@ -74,5 +74,3 @@ test 'radio button gets checked on row selection', ->
   rowView2.mouseUp()
   equal rowView1.$('input').prop('checked'), false, 'radio button gets unchecked automatically when some other row is selected'
   equal rowView2.$('input').prop('checked'), true, 'new radio button gets checked'
-
-  

@@ -35,11 +35,11 @@ test 'Ensure Table is rendered', ->
   ok view.$('table')?, 'table gets rendered'
   ok view.$('thead')?, 'header gets rendered'
   ok view.$('tbody')?, 'body gets rendered'
-  rows = view.get('childViews').objectAt(0).get('childViews').objectAt(1).get('childViews') 
-  equal rows.length, 3, 'all the rows get rendered'
-  equal rows.objectAt(0).get('childViews').objectAt(0).get('childViews').objectAt(0).$().text(), "Matt", 'Name column gets rendered'
-  equal rows.objectAt(0).get('childViews').objectAt(0).get('childViews').objectAt(1).$().text(), "22", 'Age column gets rendered'
-  equal view.get('childViews').objectAt(0).get('selection'), undefined, 'none of the rows is selected' 
+  rows = view.$('tr')
+  equal rows.length, 4, 'all the rows get rendered(header row and body rows)'
+  equal view.$('td:eq(1)').text(), "Matt", 'Name column gets rendered'
+  equal view.$('td:eq(2)').text(), "22", 'Age column gets rendered'
+  equal Ember.View.views[view.$('table').attr('id')].get('selection'), undefined, 'none of the rows is selected' 
   
 test 'Ensure Selection', ->
   view = Ember.View.create
@@ -49,13 +49,13 @@ test 'Ensure Selection', ->
           Ember.Object.create({name: 'Sakshi', age: 21})];
   appendView()
 
-  rowView1 = view.get('childViews').objectAt(0).get('childViews').objectAt(1).get('childViews').objectAt(0)
-  rowView2 = view.get('childViews').objectAt(0).get('childViews').objectAt(1).get('childViews').objectAt(1)
+  rowView1 = Ember.View.views[view.$('tr:eq(1)').attr('id')]
+  rowView2 = Ember.View.views[view.$('tr:eq(2)').attr('id')]
   rowView1.mouseUp()
-  equal view.get('childViews').objectAt(0).get('selection'), rowView1.get('content'), 'selection object is updated'
+  equal Ember.View.views[view.$('table').attr('id')].get('selection'), rowView1.get('content'), 'selection object is updated'
   equal $(rowView1.$()[0]).prop('classList').contains('tent-selected'), true, 'css gets added on selection'  
   rowView2.mouseUp()
-  equal view.get('childViews').objectAt(0).get('selection'), rowView2.get('content'), 'none of the rows is selected'
-  equal $(rowView1.$()[0]).prop('classList').contains('tent-selected'), false, 'css gets removed when some other low is selected'
+  equal Ember.View.views[view.$('table').attr('id')].get('selection'), rowView2.get('content'), 'selection property of table is updated'
+  equal $(rowView1.$()[0]).prop('classList').contains('tent-selected'), false, 'css gets removed when some other row is selected'
   equal $(rowView2.$()[0]).prop('classList').contains('tent-selected'), true, 'class added to the new selection'
 

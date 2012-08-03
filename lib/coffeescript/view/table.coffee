@@ -19,7 +19,7 @@ Tent.Table = Ember.View.extend
     @set('_list', Tent.MultipleSelectableArrayProxy.create({content: @get('list')}))
 
   isRowSelected: (row) ->
-    row.get('content') == @get('_list.selected')
+    @get('_list').get('_selectedElementsArray').contains(row.get('content'))
 
   select: (selection) ->
     @set('_list.selected', selection)

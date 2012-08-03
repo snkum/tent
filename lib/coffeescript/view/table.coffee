@@ -16,7 +16,7 @@ Tent.Table = Ember.View.extend
 
   init: ->
     @_super()
-    @set('_list', Tent.SelectableArrayProxy.create({content: @get('list')}))
+    @set('_list', Tent.MultipleSelectableArrayProxy.create({content: @get('list')}))
 
   isRowSelected: (row) ->
     row.get('content') == @get('_list.selected')
@@ -30,7 +30,10 @@ Tent.Table = Ember.View.extend
 
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
-  defaultTemplate: Ember.Handlebars.compile('<td class="tent-width-small"><input type=\'radio\'{{bindAttr name="view.parentTable.elementId" value="{{view.elementId}}"}}/></td>{{collection contentBinding="view.parentTable.visibleColumns" itemViewClass="Tent.TableCell"}}')
+  defaultTemplate: Ember.Handlebars.compile('<td class="tent-width-small"><input type=\'radio\'
+    {{bindAttr name="view.parentTable.elementId" 
+    value="{{view.elementId}}"}}/></td>
+    {{collection contentBinding="view.parentTable.visibleColumns" itemViewClass="Tent.TableCell"}}')
   classNameBindings: [
     'isSelected:tent-selected']
 

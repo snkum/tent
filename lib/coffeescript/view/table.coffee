@@ -10,9 +10,7 @@ Tent.Table = Ember.View.extend
   tagName: 'table'
   templateName: 'table'
   _columns: (-> 
-    x = @get('columns').split(',')
-    x.unshift ''
-    x
+    @get('columns').split(',')
     ).property('columns')
   visibleColumns: (-> @get('_columns')).property('_columns')
 
@@ -32,7 +30,7 @@ Tent.Table = Ember.View.extend
 
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
-  defaultTemplate: Ember.Handlebars.compile('{{collection contentBinding="view.parentTable.visibleColumns" itemViewClass="Tent.TableCell"}}')
+  defaultTemplate: Ember.Handlebars.compile('<td class="tent-width-small"><input type=\'radio\'{{bindAttr name="view.parentTable.elementId" value="{{view.elementId}}"}}/></td>{{collection contentBinding="view.parentTable.visibleColumns" itemViewClass="Tent.TableCell"}}')
   classNameBindings: [
     'isSelected:tent-selected']
 
@@ -41,7 +39,7 @@ Tent.TableRow = Ember.View.extend
   
   mouseUp: ->
     @get('parentTable').select(@get('content'))
-    @$('input').prop('checked',true) 
+    @$('input').prop('checked',true) if !(@$('input').prop('checked'))
     
     
 Tent.TableCell = Ember.View.extend
@@ -49,12 +47,8 @@ Tent.TableCell = Ember.View.extend
   classNameBindings: ['isRadio:tent-width-small']
   defaultTemplate: Ember.Handlebars.compile('{{view.value}}')
   value: (->
-    if @content == ''
-      # @set('isRadio',true)
-      row = new Handlebars.SafeString('\<input type=\'radio\' name=\'selection\'\>')   
-    else
-      row = @get('parentView.parentView.content')
-      if row then row[@get('content')] else ''
+    row = @get('parentView.parentView.content')
+    if row then row[@get('content')] else ''
   ).property('content', 'parentView')
 
 Tent.TableHeader = Ember.View.extend
@@ -62,5 +56,5 @@ Tent.TableHeader = Ember.View.extend
   defaultTemplate: Ember.Handlebars.compile('{{view.printableColumnName}}')
   printableColumnName: (->
     columnName = @get('content')
-    columnName.camelToWords() if typeof(columnName) == 'string' && columnName isnt ''
+    columnName.camelToWords() if typeof(columnName) == 'string'
   ).property('content')

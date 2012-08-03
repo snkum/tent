@@ -4,12 +4,13 @@
 #
 
 require '../template/table'
+require '../template/row'
 
 Tent.Table = Ember.View.extend
   classNames: ['table', 'table-bordered', 'table-condensed']
   tagName: 'table'
   templateName: 'table'
-  _columns: (-> 
+  _columns: (->
     @get('columns').split(',')
     ).property('columns')
   visibleColumns: (-> @get('_columns')).property('_columns')
@@ -30,12 +31,13 @@ Tent.Table = Ember.View.extend
 
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
-  defaultTemplate: Ember.Handlebars.compile('<td class="tent-width-small"><input type=\'radio\'{{bindAttr name="view.parentTable.elementId" value="{{view.elementId}}"}}/></td>{{collection contentBinding="view.parentTable.visibleColumns" itemViewClass="Tent.TableCell"}}')
+  templateName: 'row'
   classNameBindings: [
     'isSelected:tent-selected']
 
   parentTable: (-> @get('parentView.parentView')).property()
-  isSelected: (-> @get('parentTable').isRowSelected(this)).property('parentTable.selection')
+  isSelected: (-> @get('parentTable').isRowSelected(this))
+    .property('parentTable.selection')
   
   mouseUp: ->
     @get('parentTable').select(@get('content'))

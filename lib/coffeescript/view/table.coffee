@@ -23,7 +23,7 @@ Tent.Table = Ember.View.extend
 
   select: (selection) ->
     @set('_list.selected', selection)
-
+    
   selectionDidChange: (->
     @set('selection', @get('_list.selected'))
   ).observes('_list.selected')

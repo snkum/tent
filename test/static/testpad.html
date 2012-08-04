@@ -93,7 +93,7 @@
       {{#view Tent.Panel span="8" name="Main Content"}}
         <p>Tag {{view Tent.Tag text="Important"}}</p>
         <h3>Table</h3>
-        {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson"}}
+        {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson" multiselection=true}}
         <p>Selected Person is {{Pad.selectedPerson.name}}</p>
         <p>Selected State : {{Pad.stateSelection.stateName}} : {{Pad.stateSelection.stateCode}}</p>
 

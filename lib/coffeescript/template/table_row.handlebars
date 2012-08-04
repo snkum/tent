@@ -1,4 +1,11 @@
+{{#if view.multisel}}
 <td class="tent-width-small">
  {{view Ember.Checkbox nameBinding="view.parentTable.elementId" valueBinding="{{view.elementId}}"}}
 </td>
+{{else}}
+<td class="tent-width-small">
+	<input type='radio' {{bindAttr name="view.parentTable.elementId" value="{{view.elementId}}"}}>
+</td>
+{{/if}}
 {{collection contentBinding="view.parentTable.visibleColumns" itemViewClass="Tent.TableCell"}}
+

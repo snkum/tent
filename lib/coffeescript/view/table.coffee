@@ -41,7 +41,10 @@ Tent.TableRow = Ember.View.extend
   
   mouseUp: ->
     @get('parentTable').select(@get('content'))
-    @$('input').prop('checked',true) if !(@$('input').prop('checked'))
+    if @get('isSelected')
+      @$('input').prop('checked',true) 
+    else 
+      @$('input').prop('checked',false)  
     
     
 Tent.TableCell = Ember.View.extend

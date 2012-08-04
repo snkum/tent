@@ -15,8 +15,12 @@ Tent.SelectableArrayProxy = Ember.ArrayProxy.extend
       else
         selectedIndex = @indexOf value
         if (selectedIndex >= 0)
-          @set '_selectedElement', value
-          @set '_selectedIndex', selectedIndex
+          if @get('_selectedElement') == value
+            @set '_selectedElement', null
+            @set '_selectedIndex', -1
+          else
+            @set '_selectedElement', value
+            @set '_selectedIndex', selectedIndex
     @get '_selectedElement'
   ).property().volatile()
 

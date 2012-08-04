@@ -17,16 +17,21 @@ Tent.Table = Ember.View.extend
 
   init: ->
     @_super()
-    @set('_list', Tent.MultipleSelectableArrayProxy.create({content: @get('list')}))
+    @set('_list', Tent.SelectionSupport.create({content: @get('list')}))
+    @set(('_list.isMulitpleSelectionAllowed'), @get('multiselection'))
 
   isRowSelected: (row) ->
-    @get('_list').get('_selectedElementsArray').contains(row.get('content'))
+    if @get('multiselection')
+      @get('_list._selectedElementsArray').contains(row.get('content'))
+    else 
+      row.get('content') == @get('_list._selectedElement')
+
 
   select: (selection) ->
     @set('_list.selected', selection)
     
   selectionDidChange: (->
-    @set('selection', @get('_list.selected'))
+    @set('selection', @get('_list._selectedElement'))
   ).observes('_list.selected', '_list._selectedElementsArray.length')
 
 Tent.TableRow = Ember.View.extend
@@ -34,6 +39,7 @@ Tent.TableRow = Ember.View.extend
   templateName: 'table_row'
   classNameBindings: [
     'isSelected:tent-selected']
+  multiselBinding: 'parentTable.multiselection'
 
   parentTable: (-> @get('parentView.parentView')).property()
   isSelected: (-> @get('parentTable').isRowSelected(this))

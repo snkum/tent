@@ -27,7 +27,7 @@ Tent.Table = Ember.View.extend
     
   selectionDidChange: (->
     @set('selection', @get('_list.selected'))
-  ).observes('_list.selected')
+  ).observes('_list.selected', '_list._selectedElementsArray.length')
 
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
@@ -37,7 +37,7 @@ Tent.TableRow = Ember.View.extend
 
   parentTable: (-> @get('parentView.parentView')).property()
   isSelected: (-> @get('parentTable').isRowSelected(this))
-    .property('parentTable.selection')
+    .property('parentTable.selection', 'parentTable._list._selectedElementsArray.length')
   
   mouseUp: ->
     @get('parentTable').select(@get('content'))

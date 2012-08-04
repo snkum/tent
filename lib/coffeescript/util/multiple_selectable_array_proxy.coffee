@@ -22,6 +22,8 @@ Tent.MultipleSelectableArrayProxy = Ember.ArrayProxy.extend
           if @_selectedElementsArray.contains(@_selectedElement)
             @_selectedElementsArray.removeObject(@_selectedElement)
             @_selectedIndexArray.splice(@_selectedIndexArray.indexOf(@_selectedIndex),1)
+            @set '_selectedElement', null
+            @set '_selectedIndex', -1
           else
             @_selectedElementsArray.pushObject(@_selectedElement)
             @_selectedIndexArray.push(@_selectedIndex)

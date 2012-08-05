@@ -6,18 +6,18 @@
 Tent.SelectionSupport = Ember.ArrayProxy.extend
   _selectedElement: null
   _selectedIndex: -1
-  _currentElement: null
-  _currentIndex: -1
   _selectedElementsArray: []
   _selectedIndexArray: []
+  _selection: null
+
   
   selected: ((key, value) ->
     if (value != `undefined`)
       if @isMulitpleSelectionAllowed
-        x = @multi(value)
+        @set('_selection', @multi(value).slice())
       else 
-        x = @single(value)
-    x
+        @set('_selection', @single(value))
+    @get('_selection')
   ).property().volatile()
 
   single: ((value)->
@@ -39,10 +39,8 @@ Tent.SelectionSupport = Ember.ArrayProxy.extend
       if @_selectedElementsArray.contains(value)
         @_selectedElementsArray.removeObject(value)
         @_selectedIndexArray.splice(@_selectedIndexArray.indexOf(@_currentIndex),1)
-        @set '_selectedElement', null
-        @set '_selectedIndex', -1
       else
         @_selectedElementsArray.addObject(value)
         @_selectedIndexArray.push(value)
-    @get '_selectedElement'        
+    @get '_selectedElementsArray'        
   ) 

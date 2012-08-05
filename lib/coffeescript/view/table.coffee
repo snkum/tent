@@ -22,17 +22,20 @@ Tent.Table = Ember.View.extend
 
   isRowSelected: (row) ->
     if @get('multiselection')
-      @get('_list._selectedElementsArray').contains(row.get('content'))
+      if @get('_list.selected') isnt null #for the time when page first renders or when nothing is selected
+        @get('_list.selected').contains(row.get('content'))
+      else 
+        false 
     else 
-      row.get('content') == @get('_list._selectedElement')
+      row.get('content') == @get('_list.selected')
 
 
   select: (selection) ->
     @set('_list.selected', selection)
     
   selectionDidChange: (->
-    @set('selection', @get('_list._selectedElement'))
-  ).observes('_list.selected', '_list._selectedElementsArray.length')
+    @set('selection', @get('_list.selected'))
+  ).observes('_list.selected')
 
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
@@ -43,7 +46,7 @@ Tent.TableRow = Ember.View.extend
 
   parentTable: (-> @get('parentView.parentView')).property()
   isSelected: (-> @get('parentTable').isRowSelected(this))
-    .property('parentTable.selection', 'parentTable._list._selectedElementsArray.length')
+    .property('parentTable.selection')
   
   mouseUp: ->
     @get('parentTable').select(@get('content'))

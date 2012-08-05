@@ -22,13 +22,12 @@ Tent.Table = Ember.View.extend
 
   isRowSelected: (row) ->
     if @get('multiselection')
-      if @get('_list.selected') isnt null #for the time when page first renders or when nothing is selected
+      if @get('_list.selected') isnt null               #for the time when page first renders or when nothing is selected
         @get('_list.selected').contains(row.get('content'))
       else 
         false 
     else 
       row.get('content') == @get('_list.selected')
-
 
   select: (selection) ->
     @set('_list.selected', selection)

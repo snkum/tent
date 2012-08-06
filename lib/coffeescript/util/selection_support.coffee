@@ -24,8 +24,7 @@ Tent.SelectionSupport = Ember.ArrayProxy.extend
     if (value != `undefined`)
       if (value != null)
         if value != @_selectedElement
-          selectedIndex = @indexOf value
-          if (selectedIndex >= 0)
+          if (@indexOf value >= 0)
             @set '_selectedElement', value
             @set '_selectedIndex', @indexOf(value)
         else 
@@ -38,7 +37,7 @@ Tent.SelectionSupport = Ember.ArrayProxy.extend
     if(value!=`undefined`)
       if @_selectedElementsArray.contains(value)
         @_selectedElementsArray.removeObject(value)
-        @_selectedIndexArray.splice(@_selectedIndexArray.indexOf(value),1)
+        @_selectedIndexArray.splice(@_selectedIndexArray.indexOf(@indexOf(value)),1)
       else
         @_selectedElementsArray.addObject(value)
         @_selectedIndexArray.push(@indexOf(value))

@@ -39,12 +39,10 @@
           });
 
           minispade.require('lib/~test/test_helpers')
-          var matcher = /^~test\//,
-            phantomMatcher = /phantom\/[^\/]*/,
-            modules = minispade.modules;
+          var matcher = /^~test\//, modules = minispade.modules;
           for (var name in modules) {
               if (modules.hasOwnProperty(name)) {
-                  if (matcher.test(name) && !phantomMatcher.test(name)) {
+                  if (matcher.test(name)) {
                       minispade.require(name);
                   }
               }

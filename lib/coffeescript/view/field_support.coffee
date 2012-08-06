@@ -40,7 +40,7 @@ Tent.FieldSupport = Ember.Mixin.create Tent.SpanSupport, Tent.TranslationSupport
   ).property()
   
   resize: ->
-  	#@_super()
+  	@_super()
   	@estimateFormStyle()
   	
   didInsertElement: ->

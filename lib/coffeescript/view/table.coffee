@@ -18,15 +18,16 @@ Tent.Table = Ember.View.extend
   init: ->
     @_super()
     @set('_list', Tent.SelectionSupport.create({content: @get('list')}))
-    @set(('_list.isMulitpleSelectionAllowed'), @get('multiselection'))
+    @set(('_list.isMultipleSelectionAllowed'), @get('multiselection'))
 
   isRowSelected: (row) ->
     if @get('multiselection')
-      if @get('_list.selected') isnt null               #for the time when page first renders or when nothing is selected
+      if @get('_list.selected') isnt null
+        #for the time when page first renders or when nothing is selected
         @get('_list.selected').contains(row.get('content'))
-      else 
-        false 
-    else 
+      else
+        false
+    else
       row.get('content') == @get('_list.selected')
 
   select: (selection) ->
@@ -50,8 +51,8 @@ Tent.TableRow = Ember.View.extend
   mouseUp: ->
     @get('parentTable').select(@get('content'))
     if !(@$('input').prop('checked'))
-      @$('input').prop('checked',true)   
-    else 
+      @$('input').prop('checked',true)
+    else
       @$('input').prop('checked',false)
     
 Tent.TableCell = Ember.View.extend

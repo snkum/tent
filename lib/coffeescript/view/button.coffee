@@ -17,9 +17,8 @@ Tent.Button = Ember.View.extend Ember.TargetActionSupport,
   init: ->
     @_super()
     @set('_options', Ember.ArrayProxy.create({content:  @get('optionList')}) || [] )
-  targetObject: (->
-    target = @get('target')
-    target || @get('content') || @get('context')
+  target: (->
+    @get('target') || @get('content') 
   ).property('target', 'context')
   triggerAction: ->
     if !@isDisabled 

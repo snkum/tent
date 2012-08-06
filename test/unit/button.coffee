@@ -7,18 +7,17 @@ require 'tent'
 
 view = null
 dispatcher = null
-testObject = null
 appendView = -> (Ember.run -> view.appendTo('#qunit-fixture'))
 setup = ->
   @TemplateTests = Ember.Namespace.create()
-  testObject = Em.Object.create(
+  @TemplateTests.testObject = Em.Object.create(
     options: [Ember.Object.create(
       label: "Add"
-      target: "parentView.parentView.parentView.ref"
+      target: "TemplateTests.testObject"
       action: "addEvent"
     ), Ember.Object.create(
       label: "Edit"
-      target: "parentView.parentView.parentView.ref"
+      target: "TemplateTests.testObject"
       action: "editEvent"
     )]
     addEvent: ->
@@ -27,6 +26,19 @@ setup = ->
     editEvent: ->
       @set "editClicked", true
   )
+  @TemplateTests.missingProps = Em.Object.create(
+    options: [Ember.Object.create(
+      action: "addEvent"
+    ), Ember.Object.create(
+      action: "editEvent"
+    )]
+    addEvent: ->
+      @set "addClicked", true
+
+    editEvent: ->
+      @set "editClicked", true
+  )
+
   Ember.run ->
     dispatcher = Ember.EventDispatcher.create()
     dispatcher.setup()
@@ -136,8 +148,8 @@ test "Ensure action is triggered when action is set without target",->
 #Case 8 : When options provided with view
 test "Ensure options are rendered properly, and click event will opens options properly",->
   view = Em.View.create
-    template: Ember.Handlebars.compile '{{view Tent.Button type="primary" optionsBinding="view.ref.options" optionLabelPath="label" optionTargetPath="target" optionActionPath="action"}}'
-    ref: testObject
+    template: Ember.Handlebars.compile '{{view Tent.Button type="primary" optionsBinding="options" optionLabelPath="label" optionTargetPath="target" optionActionPath="action" contentBinding="content"}}'
+    contentBinding: 'TemplateTests.testObject'
   appendView()  
   element= view.$('.btn')
   ok element
@@ -155,16 +167,17 @@ test "Ensure options are rendered properly, and click event will opens options p
   
   #Now click an event on the list of options
   view.$('ul>li:eq(1)').trigger('click')
-  equal true, view.get('ref').get('editClicked'), 'edit button choice was clicked'
-  equal `undefined`, view.get('ref').get('addClicked'), 'add button choie remains unclicked'
+  reference = TemplateTests.testObject
+  equal true, reference.get('editClicked'), 'edit button choice was clicked'
+  equal `undefined`, reference.get('addClicked'), 'add button choie remains unclicked'
   equal view.$('.open').length, 0 , 'dropdown-menu is closed gracefully'
   
-#Case 8 : When options provided with view
+#Case 9 : When options provided with view
 test "Ensure options are rendered properly with disabled property, and click event should not work",->
   view = Em.View.create
-    template: Ember.Handlebars.compile '{{view Tent.Button type="primary" optionsBinding="view.ref.options" optionLabelPath="label" optionTargetPath="target" optionActionPath="action" isDisabled="true"}}'
-    ref: testObject
-  
+    template: Ember.Handlebars.compile '{{view Tent.Button type="primary" optionsBinding="options" optionLabelPath="label" optionTargetPath="target" optionActionPath="action" isDisabled="true" contentBinding="content"}}'
+    contentBinding: 'TemplateTests.testObject'
+    
   appendView()  
   element= view.$('.btn')
   ok element
@@ -178,4 +191,73 @@ test "Ensure options are rendered properly with disabled property, and click eve
   #Check event handler and ensure that list of chioces should be open
   view.$('.btn').trigger('click')
   equal view.$('.open').length, 0, 'click event is not dispatched'
+
+#Case 10 : When options provided with view and all other paths are default
+test "Ensure options are rendered properly, and Event will triggered properly(when target property missing from options and default context is view)",->
+  view = Em.View.create
+    template: Ember.Handlebars.compile '{{view Tent.Button type="primary" optionsBinding="options"}}'
+    options: [Ember.Object.create(
+      label: "Add"
+      action: "addEvent"
+    ), Ember.Object.create(
+      label: "Edit"
+      action: "editEvent"
+    )]
+    addEvent: ->
+      @set "addClicked", true
+
+    editEvent: ->
+      @set "editClicked", true
   
+  appendView()  
+  element= view.$('.btn')
+  ok element
+  # Assert default behaviour
+  classes = $(element).attr('class')
+  ok classes.indexOf("btn") isnt -1 and classes.indexOf("btn-primary") isnt -1 and classes.indexOf("dropdown-toggle") isnt -1
+  equal $(element).attr('disabled'), `undefined`, 'button is by default enable'
+  equal $(element).text().trim(), 'Button', 'Label of button is by default Button'
+  equal view.$().parent().attr('id'), 'qunit-fixture','appended to div having id qunit-fixture'
+
+  #Check event handler and ensure that list of chioces should be open
+  view.$('.btn').trigger('click')
+  equal view.$('.open')[0],view.$('.button-group')[0], 'class open is applied'
+  equal view.$('.dropdown-menu').css('display'), 'block', 'display property of dropdown-menu is block'
+  
+  #Now click an event on the list of options
+  view.$('ul>li:eq(0)').trigger('click')
+  equal true, view.get('addClicked'), 'add button choice was clicked'
+  equal `undefined`, view.get('editClicked'), 'edit button choie remains unclicked'
+  equal view.$('.open').length, 0 , 'dropdown-menu is closed gracefully'
+
+
+#Case 8 : When options provided with view
+test "Ensure options are rendered properly,  and Event will triggered properly(when label and target property missing from options)",->
+  view = Em.View.create
+    template: Ember.Handlebars.compile '{{view Tent.Button type="primary" optionsBinding="options" contentBinding="content"}}'
+    contentBinding: 'TemplateTests.missingProps'
+    
+  appendView()  
+  element= view.$('.btn')
+  ok element
+  # Assert default behaviour
+  classes = $(element).attr('class')
+  ok classes.indexOf("btn") isnt -1 and classes.indexOf("btn-primary") isnt -1 and classes.indexOf("dropdown-toggle") isnt -1
+  equal $(element).attr('disabled'), `undefined`, 'button is by default enable'
+  equal $(element).text().trim(), 'Button', 'Label of button is by default Button'
+  equal view.$().parent().attr('id'), 'qunit-fixture','appended to div having id qunit-fixture'
+
+  #Check event handler and ensure that list of chioces should be open
+  view.$('.btn').trigger('click')
+  equal view.$('.open')[0],view.$('.button-group')[0], 'class open is applied'
+  dropMenu = view.$('.dropdown-menu')
+  equal dropMenu.css('display'), 'block', 'display property of dropdown-menu is block'
+  equal $('li:eq(0)>a',dropMenu).text(), "Add Event", 'Label is set to "Add Event" successfully'
+  equal $('li:eq(1)>a',dropMenu).text(), "Edit Event", 'Label is set to "Add Event" successfully' 
+  
+  #Now click an event on the list of options
+  view.$('ul>li:eq(1)').trigger('click')
+  reference = TemplateTests.missingProps
+  equal true, reference.get('editClicked'), 'edit button choice was clicked'
+  equal `undefined`, reference.get('addClicked'), 'add button choie remains unclicked'
+  equal view.$('.open').length, 0 , 'dropdown-menu is closed gracefully'  

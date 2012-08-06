@@ -31,16 +31,16 @@ test 'Ensure Tent.Form renders after set of inner element', ->
   appendView()
   equal view.get('formStyle'), "horizontal"
   
-test 'Ensure Tent.Form renders after set width of Form bellow sum of inner element', ->
+test 'Ensure Tent.Form renders after set width of Form below sum of inner element', ->
   view=Tent.Form.create({
     attributeBindings: "style"
     template: Ember.Handlebars.compile '{{view Tent.TextField valueBinding="name" labelBinding="label"}}'
     name: 'foobar'
     label: 'FooBar'
-    style: 'width:300px'
+    style: 'width:200px'
   })
   appendView()
-  equal view.get('formStyle'), "vertical"
+  equal view.get('formStyle'), "vertical",'form style now converted into vertical'
   
 test 'Ensure Tent.Form renders after set width of Form above sum of inner element', ->
   view=Tent.Form.create({
@@ -51,4 +51,5 @@ test 'Ensure Tent.Form renders after set width of Form above sum of inner elemen
     style: 'width:700px'
   })
   appendView()
-  equal view.get('formStyle'), "horizontal"
+  equal view.get('formStyle'), "horizontal",'form style now converted into horizontal'
+

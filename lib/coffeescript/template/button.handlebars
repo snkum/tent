@@ -1,13 +1,9 @@
-{{#view Ember.Button class="btn"}}{{view.label}}{{/view}}
+<div {{bindAttr class="view.classes" disabled="view.isDisabled"}} {{action triggerAction target="view"}}>
+  {{view.label}}
+  {{#if view.hasOptions}}
+  	 <span class="caret"></span>
+  {{/if}}
+</div>
 {{#if view.hasOptions}}
-  {{#view Ember.Button class="btn dropdown-toggle" data-toggle="dropdown"}}
-    <span class="caret"></span>
-  </button>
-<ul class="dropdown-menu">
-  <li><a href="#">Action</a></li>
-  <li><a href="#">Another action</a></li>
-  <li><a href="#">Something else here</a></li>
-  <li class="divider"></li>
-  <li><a href="#">Separated link</a></li>
-</ul>
+	{{collection contentBinding="view._options" tagName="ul" classNames="dropdown-menu" itemViewClass="Tent.ButtonOptions"}}
 {{/if}}

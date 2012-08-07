@@ -19,6 +19,12 @@ Tent.Table = Ember.View.extend
     @_super()
     @set('_list', Tent.SelectionSupport.create({content: @get('list')}))
     @set(('_list.isMultipleSelectionAllowed'), @get('multiselection'))
+    if @get('defaultSelection')
+      if @get('multiselection')
+        for element in @get('defaultSelection')
+          @select element
+      else
+        @select @get('defaultSelection')
 
   isRowSelected: (row) ->
     if @get('multiselection')
@@ -40,20 +46,26 @@ Tent.Table = Ember.View.extend
 Tent.TableRow = Ember.View.extend
   tagName: 'tr'
   templateName: 'table_row'
-  classNameBindings: [
-    'isSelected:tent-selected']
+  classNameBindings: ['isSelected:tent-selected']
   multiselBinding: 'parentTable.multiselection'
+  
+  didInsertElement: ->
+    # checks the radioButtons/checkboxes in case of defaultselection
+    @checkSelection()
 
   parentTable: (-> @get('parentView.parentView')).property()
   isSelected: (-> @get('parentTable').isRowSelected(this))
     .property('parentTable.selection')
   
-  mouseUp: ->
-    @get('parentTable').select(@get('content'))
-    if !(@$('input').prop('checked'))
+  checkSelection: (-> 
+    if @get 'isSelected'
       @$('input').prop('checked',true)
     else
       @$('input').prop('checked',false)
+  ).observes('isSelected')
+  
+  mouseUp: ->
+    @get('parentTable').select(@get('content'))
     
 Tent.TableCell = Ember.View.extend
   tagName: 'td'

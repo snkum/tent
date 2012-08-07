@@ -30,8 +30,7 @@
           Ember.Object.create({name: 'Khajan', age: 31})          
         ];
 
-        selectedPerson = {}
-
+        Pad.selectedPerson = [Pad.people[0], Pad.people[3]];
         Tent.Enumeration = {
           YESNO: ['Yes', 'No'],
           STATES: ['AL', 'AK', 'CA', 'GA', 'HI']
@@ -94,7 +93,7 @@
       {{#view Tent.Panel span="8" name="Main Content"}}
         <p>Tag {{view Tent.Tag text="Important"}}</p>
         <h3>Table</h3>
-        {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson" multiselection=true}}
+        {{view Tent.Table listBinding="Pad.people" columns="name,age" selectionBinding="Pad.selectedPerson" multiselection=true defaultSelectionBinding="Pad.selectedPerson"}}
         <p>Selected Person is {{Pad.selectedPerson.name}}</p>
         <p>Selected State : {{Pad.stateSelection.stateName}} : {{Pad.stateSelection.stateCode}}</p>
 

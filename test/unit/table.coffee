@@ -96,6 +96,23 @@ test 'radio button in synch with row selection and deselection', ->
   equal rowView2.$('input').prop('checked'), false,
     'radio button gets unchecked automatically on deselection'
 
+test 'Ensures default selection', ->
+  view = Ember.View.create
+    template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
+    columns="name,age" selectionBinding="selectedPerson" defaultSelectionBinding="people.firstObject" multiselection=false}}'
+    people: [Ember.Object.create({name: 'Matt', age: 22}),
+          Ember.Object.create({name: 'Raghu', age: 1000}),
+          Ember.Object.create({name: 'Sakshi', age: 21})]
+    
+  appendView()
+  rowView1 = Ember.View.views[view.$('tr:eq(1)').attr('id')]
+  equal $(rowView1.$()[0]).prop('classList').contains('tent-selected'),
+    true, 'css added on default selection'
+  rowView1.didInsertElement()
+  equal rowView1.$('input').prop('checked'), true,
+    'radio button gets in case of default selection'
+  
+  
 test 'Ensure Table is rendered with checkboxes(multiple selection)', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
@@ -182,3 +199,32 @@ test 'checkbox gets checked on row selection', ->
     'checkbox of previously selected row is still checked'
   equal rowView2.$('input').prop('checked'),
     false, 'checkbox unchecked on deselection'
+    
+test 'Ensures default (multiple) selection', ->
+  people = [Ember.Object.create({name: 'Matt', age: 22}),
+          Ember.Object.create({name: 'Raghu', age: 1000}),
+          Ember.Object.create({name: 'Sakshi', age: 21})]
+  view = Ember.View.create
+    template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
+    columns="name,age" selectionBinding="selectedPerson" defaultSelectionBinding="sel" multiselection=true}}'
+    people: people
+    sel: people.slice(0,2)
+  appendView()
+  rowView1 = Ember.View.views[view.$('tr:eq(1)').attr('id')]
+  equal $(rowView1.$()[0]).prop('classList').contains('tent-selected'),
+    true, 'css added on default selection'
+  rowView1.didInsertElement()
+  equal rowView1.$('input').prop('checked'), true,
+    'checkbox checked on default selection'
+  rowView2 = Ember.View.views[view.$('tr:eq(2)').attr('id')]
+  equal $(rowView2.$()[0]).prop('classList').contains('tent-selected'),
+    true, 'css added on default selection'
+  rowView2.didInsertElement()
+  equal rowView2.$('input').prop('checked'), true,
+    'checkbox checked on default selection'
+  rowView3 = Ember.View.views[view.$('tr:eq(3)').attr('id')]
+  equal $(rowView3.$()[0]).prop('classList').contains('tent-selected'),
+    false, 'css doesnt get added on the elements which are not in default list'
+  rowView3.didInsertElement()
+  equal rowView3.$('input').prop('checked'), false,
+    'checkbox unchecked for elements not in default selection'

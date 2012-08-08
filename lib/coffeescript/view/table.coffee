@@ -51,20 +51,24 @@ Tent.TableRow = Ember.View.extend
     if @get('parentTable').get('isEditable')
       # checks the radioButtons/checkboxes in case of defaultselection
       @checkSelection()
-
+  
   parentTable: (-> @get('parentView.parentView')).property()
   isSelected: (-> @get('parentTable').isRowSelected(this))
     .property('parentTable.selection')
   
   checkSelection: (-> 
     if @get 'isSelected'
-      @$('input').prop('checked',true)
+      @$('input').prop('checked',true) 
     else
       @$('input').prop('checked',false)
   ).observes('isSelected')
   
-  mouseUp: ->
+  mouseUp: (event)->
     @get('parentTable').select(@get('content')) if @get('parentTable').get('isEditable')
+    # to remove default click events of checkbox and radiobuttons
+    @$("input").click (event) ->
+      $(@).prop('checked',false) if $(@).prop('checked') 
+      false if event.target is @
     
 Tent.TableCell = Ember.View.extend
   tagName: 'td'

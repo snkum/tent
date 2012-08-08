@@ -3,7 +3,7 @@
     {{collection contentBinding="view.visibleColumns" itemViewClass="Tent.TableHeader"}}
 </thead>
 {{#if view.isEditable}}
-{{collection contentBinding="view.list" tagName="tbody" itemViewClass="Tent.TableRow"}}
+  {{collection contentBinding="view.list" tagName="tbody" itemViewClass="Tent.TableRow"}}
 {{else}}
-{{collection contentBinding="view.defaultSelection" tagName="tbody" itemViewClass="Tent.TableRow"}}
+  {{collection contentBinding="view.defaultSelection" tagName="tbody" itemViewClass="Tent.TableRow"}}
 {{/if}}

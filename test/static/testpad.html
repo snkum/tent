@@ -39,7 +39,37 @@
                        Ember.Object.create({stateName: "Arkansas", stateCode: "AR"}),
                        Ember.Object.create({stateName: "Florida", stateCode: "FL"})]  
 
-        Pad.checkGroupContent = ["AP", "AL", "AT"]       
+        Pad.checkGroupContent = ["AP", "AL", "AT"]
+        count = 1
+        Pad.clickEvent= function(){
+         	$('#click-label').text('clicked '+(count++)+' times')
+		}
+				
+        Pad.btnOptions = [Ember.Object.create({label: "Add", target: "Pad.groupTarget", action: "addEvent"}),
+                      Ember.Object.create({label: "Edit", target: "Pad.groupTarget", action: "editEvent"}),
+                      Ember.Object.create({label: "Delete", target: "Pad.groupTarget", action: "deleteEvent"})]
+        Pad.optionsMissingLabel = [Ember.Object.create({target: "Pad.groupTarget", action: "addEvent"}),
+                      Ember.Object.create({target: "Pad.groupTarget", action: "editEvent"}),
+                      Ember.Object.create({target: "Pad.groupTarget", action: "deleteEvent"})]
+		Pad.optionsMissingTarget = [Ember.Object.create({label: "Add", action: "addEvent"}),
+                      Ember.Object.create({label: "Edit", action: "editEvent"}),
+                      Ember.Object.create({label: "Delete", action: "deleteEvent"})]
+                      
+        Pad.groupTarget = Ember.Object.create({
+        	addEvent: function(){
+            	alert("action add clicked");
+            	return false
+          	},
+          	editEvent: function(){
+            	alert("action edit clicked");
+            	return false
+          	},	
+          	deleteEvent: function(){
+            	alert("action delete clicked");
+            	return false
+          	}
+        }) 
+        
 
       })(minispade);
     </script>
@@ -69,11 +99,22 @@
         {{view Tent.AlertMessage text="Well done! You successfully read this important alert message." type="success"}}
         {{view Tent.AlertMessage text="Oh snap! Change a few things up and try submitting again." type="error"}}
         {{view Tent.ProgressBar isStriped=true progress="50" isAnimated=true}}
+    	{{view Tent.Button label="Click Me" type="primary" action="clickEvent" target="Pad"}}
+    	<p id="click-label"></p>
+    	<br/>
+    	{{view Tent.Button label="Click Me" type="success" optionsBinding="Pad.btnOptions" optionLabelPath="label" optionTargetPath="target" optionActionPath="action"}}
+    	<br/>
+    	{{view Tent.Button label="Button with options only" type="info" optionsBinding="Pad.btnOptions"}}
+    	<br/>
+    	{{view Tent.Button label="Label missing in button options" type="primary" optionsBinding="Pad.optionsMissingLabel"}}
+    	<br/>
+    	{{view Tent.Button label="Label and Target missing in button options" optionsBinding="Pad.optionsMissingLabel" contentBinding="Pad.groupTarget"}}
     
+    	<p id="click-label"></p>
       {{/view}}
 
       {{view Tent.ModalPane text="Do you want to perform this action!!!" header="My Heading" primary="OK" secondary="Cancel"}}
-
+		
     </script>
 
   </body>

@@ -10,7 +10,7 @@ teardown = ( ->
 module 'selection tests', setup, teardown
 
 test 'simple selection', ->
-  array = Tent.SelectionSupport.create content:['one', 'two', 'three'] 
+  array = Tent.SelectableArrayProxy.create content:['one', 'two', 'three'] 
   array.set 'isMultipleSelectionAllowed', false
   array.set 'selected', 'two'
   equal array.get('selected'), 'two', 'selection works with no prior selection'
@@ -18,7 +18,7 @@ test 'simple selection', ->
   equal array.get('selected'), 'three', 'selection works with prior selection'
 
 test 'selection retained with array mutation', ->
-  array = Tent.SelectionSupport.create content:["orange", "mango", "banana", "sugar", "tea"]
+  array = Tent.SelectableArrayProxy.create content:["orange", "mango", "banana", "sugar", "tea"]
   array.set 'isMultipleSelectionAllowed', false
   array.set 'selected', 'banana'
   array.pushObject 'coffee'
@@ -32,7 +32,7 @@ test 'selection retained with array mutation', ->
   equal array.get('_selectedIndex'), array.indexOf(array.get('selected')), 'index adjusted when earlier element modified'
 
 test 'selected sets to null when current selection is removed', ->
-  array = Tent.SelectionSupport.create content:["orange", "mango", "banana", "sugar", "tea"]
+  array = Tent.SelectableArrayProxy.create content:["orange", "mango", "banana", "sugar", "tea"]
   array.set 'isMultipleSelectionAllowed', false
   array.set 'selected', 'banana'   # selected index = 2
   array.removeAt 2, 1              # selected index = 2/sugar
@@ -42,7 +42,7 @@ test 'selected sets to null when current selection is removed', ->
 #### tests for multiple selection
 
 test 'simple multiple selection', ->
-  array = Tent.SelectionSupport.create 
+  array = Tent.SelectableArrayProxy.create 
     content: ['one', 'two', 'three']
     isMultipleSelectionAllowed: true
   array.set 'selected', 'one'
@@ -51,7 +51,7 @@ test 'simple multiple selection', ->
   equal array.get('selected').length, 2, 'selection works with prior selection, elements are added to the array'
       
 test 'selection retained with array mutation in a multi-select scenario', ->
-  array = Tent.SelectionSupport.create content:["orange", "mango", "banana", "sugar", "tea"]
+  array = Tent.SelectableArrayProxy.create content:["orange", "mango", "banana", "sugar", "tea"]
   array.set 'isMultipleSelectionAllowed', true
   array.set 'selected', 'banana'
   array.pushObject 'coffee'
@@ -64,7 +64,7 @@ test 'selection retained with array mutation in a multi-select scenario', ->
   equal array.get('_selectedIndexArray').toString(), '2', 'Indeces are adjusted'
   
 test 'element deleted from array when selection is removed in a multi-select scenario', ->
-  array = Tent.SelectionSupport.create content:["orange", "mango", "banana", "sugar", "tea"]
+  array = Tent.SelectableArrayProxy.create content:["orange", "mango", "banana", "sugar", "tea"]
   array.set 'isMultipleSelectionAllowed', true
   array.set 'selected', 'banana'   # selected index = 2
   array.set 'selected', 'tea'   # selected index = 4

@@ -17,7 +17,7 @@ Tent.Table = Ember.View.extend
 
   init: ->
     @_super()
-    @set('_list', Tent.SelectionSupport.create({content: @get('list')}))
+    @set('_list', Tent.SelectableArrayProxy.create({content: @get('list')}))
     @set(('_list.isMultipleSelectionAllowed'), @get('multiselection'))
     if @get('defaultSelection')
       if @get('multiselection')

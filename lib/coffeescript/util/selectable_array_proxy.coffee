@@ -19,7 +19,7 @@ Tent.SelectableArrayProxy = Ember.ArrayProxy.extend
       if @get('isMultipleSelectionAllowed')
         @set('_selection', @_multiSelection(value).slice())
       else
-        @set('_selection', @_singleSelection(value))
+        @set('_selection', new Array(@_singleSelection(value)).slice())
     @get('_selection')
   ).property().volatile()
 
@@ -36,6 +36,7 @@ Tent.SelectableArrayProxy = Ember.ArrayProxy.extend
       else
         @set '_selectedElement', null
         @set '_selectedIndex', -1
+        
     @get '_selectedElement'
   )
   

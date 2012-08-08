@@ -23,20 +23,20 @@ test 'selection retained with array mutation', ->
   array.set 'selected', 'banana'
   array.pushObject 'coffee'
   equal array.get('selected'), 'banana', 'selection retained when new element appended'
-  equal array.get('_selectedIndex'), array.indexOf(array.get('selected')), 'index retained when new element appended' 
+  equal array.get('_selectedIndex'), array.indexOf(array.get('selected').objectAt(0)), 'index retained when new element appended' 
   array.insertAt 0,'ORANGE'
   equal array.get('selected'), 'banana', 'selection retained when earlier element modified'
-  equal array.get('_selectedIndex'), array.indexOf(array.get('selected')), 'index adjusted when earlier element modified'
+  equal array.get('_selectedIndex'), array.indexOf(array.get('selected').objectAt(0)), 'index adjusted when earlier element modified'
   array.removeAt 1, 1
   equal array.get('selected'), 'banana', 'selection retained when earlier element removed'
-  equal array.get('_selectedIndex'), array.indexOf(array.get('selected')), 'index adjusted when earlier element modified'
+  equal array.get('_selectedIndex'), array.indexOf(array.get('selected').objectAt(0)), 'index adjusted when earlier element modified'
 
 test 'selected sets to null when current selection is removed', ->
   array = Tent.SelectableArrayProxy.create content:["orange", "mango", "banana", "sugar", "tea"]
   array.set 'isMultipleSelectionAllowed', false
   array.set 'selected', 'banana'   # selected index = 2
   array.removeAt 2, 1              # selected index = 2/sugar
-  equal array.get('selected'), null, 'selection is set to null when selected element is deleted'
+  equal array.get('selected').objectAt(0), null, 'selection is set to null when selected element is deleted'
   equal array.get('_selectedIndex'), -1, 'index set to -1 when current selection is deleted'
   
 #### tests for multiple selection

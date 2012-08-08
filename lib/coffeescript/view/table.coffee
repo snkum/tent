@@ -1,6 +1,8 @@
 #
 # Copyright PrimeRevenue, Inc. 2012
 # All rights reserved.
+# Always pass an array to the list binding and default selection even 
+# if there is only one item in the array for table view 
 #
 
 require '../template/table'
@@ -17,24 +19,20 @@ Tent.Table = Ember.View.extend
 
   init: ->
     @_super()
+    @set('multiselection', false) if @get('multiselection') == undefined
+    @set('isEditable', true) if @get('isEditable') == undefined
     @set('_list', Tent.SelectableArrayProxy.create({content: @get('list')}))
     @set(('_list.isMultipleSelectionAllowed'), @get('multiselection'))
     if @get('defaultSelection')
-      if @get('multiselection')
-        for element in @get('defaultSelection')
-          @select element
-      else
-        @select @get('defaultSelection')
-
+      for element in @get('defaultSelection')
+        @select element
+      
   isRowSelected: (row) ->
-    if @get('multiselection')
       if @get('_list.selected') isnt null
         #for the time when page first renders or when nothing is selected
         @get('_list.selected').contains(row.get('content'))
       else
         false
-    else
-      row.get('content') == @get('_list.selected')
 
   select: (selection) ->
     @set('_list.selected', selection)
@@ -50,8 +48,9 @@ Tent.TableRow = Ember.View.extend
   multiselBinding: 'parentTable.multiselection'
   
   didInsertElement: ->
-    # checks the radioButtons/checkboxes in case of defaultselection
-    @checkSelection()
+    if @get('parentTable').get('isEditable')
+      # checks the radioButtons/checkboxes in case of defaultselection
+      @checkSelection()
 
   parentTable: (-> @get('parentView.parentView')).property()
   isSelected: (-> @get('parentTable').isRowSelected(this))
@@ -65,7 +64,7 @@ Tent.TableRow = Ember.View.extend
   ).observes('isSelected')
   
   mouseUp: ->
-    @get('parentTable').select(@get('content'))
+    @get('parentTable').select(@get('content')) if @get('parentTable').get('isEditable')
     
 Tent.TableCell = Ember.View.extend
   tagName: 'td'

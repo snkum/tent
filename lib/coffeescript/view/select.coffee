@@ -5,7 +5,7 @@
 
 require '../template/select'
 
-Tent.Select = Ember.View.extend
+Tent.Select = Ember.View.extend Tent.FieldSupport,
   templateName: 'select'
   classNames: ['tent-select', 'control-group']
 
@@ -21,3 +21,4 @@ Tent.Select = Ember.View.extend
     if !@get('multiple')
       if prompt = @get('prompt') then prompt else "Please Select..." 
   ).property('prompt')
+  

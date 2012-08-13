@@ -3,65 +3,88 @@
 # All rights reserved.
 #
  
-Tent.SelectionSupport = Ember.ArrayProxy.extend
-  _selectedElement: null
-  _selectedIndex: -1
-  _selectedElementsArray: []
-  _selectedIndexArray: []
-  _selection: null
+Tent.SelectionSupport = Ember.ArrayProxy.extend 
+  init: ->
+    @_super()
+    @set '_selectedElementsArray', []
+    @set '_selectedIndexArray', []
+    @set '_selectedElement', null
+    @set '_selectedIndex', -1
+    @set '_selection', null
 
   
   selected: ((key, value) ->
-    if (value != `undefined`)
-      if @isMulitpleSelectionAllowed
-        @set('_selection', @multi(value).slice())
-      else 
-        @set('_selection', @single(value))
+    if value != `undefined`
+      if @get('isMultipleSelectionAllowed')
+        @set('_selection', @_multiSelection(value).slice())
+      else
+        @set('_selection', @_singleSelection(value))
     @get('_selection')
   ).property().volatile()
 
-  single: ((value)->
+  _singleSelection: ((value)->
     if (value != `undefined`)
       if (value != null)
-        if value != @_selectedElement
-          selectedIndex = @indexOf value
-          if (selectedIndex >= 0)
+        if value != @get('_selectedElement')
+          if (@indexOf value >= 0)
             @set '_selectedElement', value
             @set '_selectedIndex', @indexOf(value)
-        else 
+        else
           @set '_selectedElement', null
           @set '_selectedIndex', -1
-    @get '_selectedElement' 
+      else
+        @set '_selectedElement', null
+        @set '_selectedIndex', -1
+    @get '_selectedElement'
   )
   
-  multi: ((value)->
-    if(value!=`undefined`)
-      if @_selectedElementsArray.contains(value)
-        @_selectedElementsArray.removeObject(value)
-        @_selectedIndexArray.splice(@_selectedIndexArray.indexOf(value),1)
-      else
-        @_selectedElementsArray.addObject(value)
-        @_selectedIndexArray.push(@indexOf(value))
-    @get '_selectedElementsArray'        
-  ) 
+  _multiSelection: (value) ->
+    if(value != `undefined`)
+      if (value != null)
+        selectedElements = @get('_selectedElementsArray')
+        selectedIndices = @get('_selectedIndexArray')
+        if selectedElements.contains(value)
+          selectedElements.removeObject(value)
+          selectedIndices.splice(selectedIndices.indexOf(@indexOf(value)),1)
+        else
+          selectedElements.addObject(value)
+          selectedIndices.push(@indexOf(value))
+      else 
+        @set '_selectedElementsArray', []
+        @set '_selectedIndexArray', []        
+    @get '_selectedElementsArray'
 
   contentDidChange: (->
     content = @get 'content'
     #@_super()
-    if @isMulitpleSelectionAllowed
-    #add the code for multiple selection support
+    if @get('isMultipleSelectionAllowed')
+      currentIndexArray = @get '_selectedIndexArray'
+      currentElementsArray = @get '_selectedElementsArray'
+      newIndexArray = []
+      if currentElementsArray.length != 0
+        #create a new index array which has the list of the existing selected element indeces 
+        for element in currentElementsArray
+          if content.contains(element)
+            newIndexArray.push(content.indexOf element)
+        #These will be unequal if any selected elements were affected
+        if currentIndexArray.toString() != newIndexArray.toString()
+          @set('_selectedElementsArray', [])
+          @set('_selectedIndexArray', [])
+          if newIndexArray.length != 0
+            for element in newIndexArray
+              @set('selected', content.objectAt(element))
+          else 
+            @set('selected', null)
     else
       currentIndex = @get '_selectedIndex'
-      if (currentIndex >= 0)
-        # There is a selectedElement. Lets make sure it was not affected by the change
-        newIndex = @indexOf @get('_selectedElement');
-        if (currentIndex != newIndex)
-          # selectedElement was impacted by the change
-          if (newIndex == -1)
-            # selectedElement was removed. Make the element at the current location the selectedElement
-            if (currentIndex >= content.length)
-              currentIndex = content.length - 1
-            @set '_selectedElement', if (currentIndex == -1) then null else @objectAt(currentIndex)
-          else
-            @set '_selectedIndex', newIndex
+      currentElement = @get '_selectedElement' 
+      if currentElement != null
+        #If selected element was not deleted
+        if content.contains(currentElement)
+          newIndex = @indexOf currentElement
+          #check if selected element was affected
+          if newIndex != currentIndex
+            @set '_selectedIndex', content.indexOf currentElement
+        else 
+          @set 'selected', null
   ).observes('content.@each')

@@ -49,7 +49,6 @@ Tent.TableRow = Ember.View.extend
   tagName: 'tr'
   templateName: 'table_row'
   classNameBindings: ['isSelected:tent-selected']
-  multiselBinding: 'parentTable.multiselection'
   parentTableBinding: 'parentView.parentView'
   didInsertElement: ->
     if @get('parentTable').get('isEditable')

@@ -27,7 +27,7 @@ module "Tent - Basic Widgets - table", setup, teardown
 test 'Ensure Table is rendered with radio buttons(single selection)', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" multiselection=false isEditable=true}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" multiselection=false isEditable=true}}'
     people: [Ember.Object.create({name: 'Matt', age: 22}),
           Ember.Object.create({name: 'Raghu', age: 1000}),
           Ember.Object.create({name: 'Sakshi', age: 21})]
@@ -48,7 +48,7 @@ test 'Ensure Table is rendered with radio buttons(single selection)', ->
 test 'Ensure Single Selection and Deselection', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" multiselection=false isEditable=true}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" multiselection=false isEditable=true}}'
     people: [Ember.Object.create({name: 'Matt', age: 22}),
           Ember.Object.create({name: 'Raghu', age: 1000}),
           Ember.Object.create({name: 'Sakshi', age: 21})]
@@ -78,7 +78,7 @@ test 'Ensure Single Selection and Deselection', ->
 test 'radio button in synch with row selection and deselection', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" multiselection=false isEditable=true}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" multiselection=false isEditable=true}}'
     people: [Ember.Object.create({name: 'Matt', age: 22}),
           Ember.Object.create({name: 'Raghu', age: 1000}),
           Ember.Object.create({name: 'Sakshi', age: 21})]
@@ -104,7 +104,7 @@ test 'Ensures default selection', ->
   peoplelist = people.slice(0,1)
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" defaultSelectionBinding="peopleList" multiselection=false isEditable=true}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" defaultSelectionBinding="peopleList" multiselection=false isEditable=true}}'
     people: people
     peopleList: peoplelist
   appendView()
@@ -119,7 +119,7 @@ test 'Ensures default selection', ->
 test 'Ensure Table is rendered with checkboxes(multiple selection)', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" multiselection=true isEditable=true}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" multiselection=true isEditable=true}}'
     people: [Ember.Object.create({name: 'Matt', age: 22}),
           Ember.Object.create({name: 'Raghu', age: 1000}),
           Ember.Object.create({name: 'Sakshi', age: 21})]
@@ -140,7 +140,7 @@ test 'Ensure Table is rendered with checkboxes(multiple selection)', ->
 test 'Ensure Multiple Selection And Deselection', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" multiselection=true isEditable=true}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" multiselection=true isEditable=true}}'
     people: [Ember.Object.create({name: 'Matt', age: 22}),
           Ember.Object.create({name: 'Raghu', age: 1000}),
           Ember.Object.create({name: 'Sakshi', age: 21})]
@@ -182,7 +182,7 @@ test 'Ensure Multiple Selection And Deselection', ->
 test 'checkbox gets checked on row selection', ->
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" multiselection=true isEditable=true}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" multiselection=true isEditable=true}}'
     people: [Ember.Object.create({name: 'Matt', age: 22}),
           Ember.Object.create({name: 'Raghu', age: 1000}),
           Ember.Object.create({name: 'Sakshi', age: 21})]
@@ -209,7 +209,7 @@ test 'Ensures default (multiple) selection', ->
           Ember.Object.create({name: 'Sakshi', age: 21})]
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" defaultSelectionBinding="sel" multiselection=true isEditable=true}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" defaultSelectionBinding="sel" multiselection=true isEditable=true}}'
     people: people
     sel: people.slice(0,2)
   appendView()
@@ -238,7 +238,7 @@ test 'Check default table when no additional parameters are passed', ->
           Ember.Object.create({name: 'Sakshi', age: 21})]
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson"}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson"}}'
     people: people
   appendView()
   ok view.$('table')?, 'table gets rendered'
@@ -259,7 +259,7 @@ test 'Ensure a single row is rendered with no input elements in case of uneditab
           Ember.Object.create({name: 'Sakshi', age: 21})]
   view = Ember.View.create
     template: Ember.Handlebars.compile '{{view Tent.Table listBinding="people"
-    columns="name,age" selectionBinding="selectedPerson" defaultSelectionBinding="sel" isEditable=false}}'
+    headers="Name,Age" columns="name,age" selectionBinding="selectedPerson" defaultSelectionBinding="sel" isEditable=false}}'
     people: people
     sel: people.slice(0,1)
   appendView()

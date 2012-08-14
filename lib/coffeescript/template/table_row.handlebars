@@ -1,5 +1,6 @@
 {{#if view.parentTable.isEditable}}
-  {{#if view.multisel}}
+	{{debugger}}
+  {{#if view.parentTable.multiselection}}
     <td class="tent-width-small">
       {{view Ember.Checkbox nameBinding="view.parentTable.elementId" valueBinding="{{view.elementId}}"}}
     </td>

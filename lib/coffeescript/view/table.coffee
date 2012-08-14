@@ -12,6 +12,10 @@ Tent.Table = Ember.View.extend
   classNames: ['table', 'table-bordered', 'table-condensed']
   tagName: 'table'
   templateName: 'table'
+  _columnHeaders: (->
+    @get('headers').split(',')
+  ).property('headers')
+  visibleHeaders: (-> @get('_columnHeaders')).property('_columnHeaders')
   _columns: (->
     @get('columns').split(',')
     ).property('columns')
@@ -22,23 +26,23 @@ Tent.Table = Ember.View.extend
     @set('multiselection', false) if @get('multiselection') == undefined
     @set('isEditable', true) if @get('isEditable') == undefined
     @set('_list', Tent.SelectableArrayProxy.create({content: @get('list')}))
-    @set(('_list.isMultipleSelectionAllowed'), @get('multiselection'))
+    @get('_list').set('isMultipleSelectionAllowed', @get('multiselection'))
     if @get('defaultSelection')
       for element in @get('defaultSelection')
         @select element
       
   isRowSelected: (row) ->
-      if @get('_list.selected') isnt null
+      if (selElements = @get('_list').get('selected')) isnt null
         #for the time when page first renders or when nothing is selected
-        @get('_list.selected').contains(row.get('content'))
+        selElements.contains(row.get('content'))
       else
         false
 
   select: (selection) ->
-    @set('_list.selected', selection)
+    @get('_list').set('selected', selection)
     
   selectionDidChange: (->
-    @set('selection', @get('_list.selected'))
+    @set('selection', @get('_list').get('selected'))
   ).observes('_list.selected')
 
 Tent.TableRow = Ember.View.extend
@@ -46,13 +50,12 @@ Tent.TableRow = Ember.View.extend
   templateName: 'table_row'
   classNameBindings: ['isSelected:tent-selected']
   multiselBinding: 'parentTable.multiselection'
-  
+  parentTableBinding: 'parentView.parentView'
   didInsertElement: ->
     if @get('parentTable').get('isEditable')
       # checks the radioButtons/checkboxes in case of defaultselection
       @checkSelection()
   
-  parentTable: (-> @get('parentView.parentView')).property()
   isSelected: (-> @get('parentTable').isRowSelected(this))
     .property('parentTable.selection')
   
@@ -75,8 +78,11 @@ Tent.TableCell = Ember.View.extend
   classNameBindings: ['isRadio:tent-width-small']
   defaultTemplate: Ember.Handlebars.compile('{{view.value}}')
   value: (->
-    row = @get('parentView.parentView.content')
-    if row then row[@get('content')] else ''
+    row = @get('parentView').get('parentView').get('content')
+    if row 
+      _const = row.__proto__.constructor
+      if _const is Object then row[@get('content')] else row.get(@get('content'))
+    else '' 
   ).property('content', 'parentView')
 
 Tent.TableHeader = Ember.View.extend

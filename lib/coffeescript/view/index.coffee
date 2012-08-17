@@ -3,8 +3,8 @@
 # All rights reserved.
 #
 
-require './span_support'
-require './field_support'
+require '../mixin/span_support'
+require '../mixin/field_support'
 require './text_field'
 require './tag'
 require './numeric_text_field'

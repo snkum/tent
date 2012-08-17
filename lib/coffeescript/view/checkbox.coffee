@@ -3,7 +3,7 @@
 # All rights reserved.
 #
 
-require './field_support'
+require '../mixin/field_support'
 require '../template/checkbox'
 
 Tent.Checkbox = Ember.View.extend Tent.FieldSupport,

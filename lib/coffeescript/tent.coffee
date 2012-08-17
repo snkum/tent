@@ -4,6 +4,8 @@
 #
 
 @Tent = {} unless @Tent?
+@Tent.Controllers = Em.Namespace.create
 
 require './util'
 require './view'
+require './controllers'

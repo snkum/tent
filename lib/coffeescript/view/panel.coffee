@@ -3,7 +3,7 @@
 # All rights reserved.
 #
 
-require './span_support'
+require '../mixin/span_support'
 
 Tent.Panel = Ember.View.extend Tent.SpanSupport,
   layout: Ember.Handlebars.compile '{{#if view.name}}<h3>{{view.name}}</h3>{{/if}}{{yield}}'

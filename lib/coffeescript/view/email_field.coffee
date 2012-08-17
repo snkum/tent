@@ -3,7 +3,7 @@
 # All rights reserved.
 #
 
-require './field_support'
+require '../mixin/field_support'
 require '../template/text_field'
 
 Tent.EmailTextField = Tent.TextField.extend Tent.FieldSupport,

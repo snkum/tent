@@ -127,7 +127,7 @@ load_gem_assets('public', 'bootstrap-sass')
 output "public"
 
 input "test" do
-  match /(unit|lib)(\/[^\/]*)*([^\/]*).coffee/ do
+  match /(unit|lib|coffeescript)(\/[^\/]*)*([^\/]*).coffee/ do
     coffee_script
     minispade :rewrite_requires => true, :string => true, :module_id_generator => proc { |input|
       id = input.path.dup
@@ -162,6 +162,20 @@ input "lib" do
     concat "javascript/tent.js"
   end
 
+  match "vendor/**/*.js" do
+    filter RequireRewriteFilter
+    minispade string: true, rewrite_requires: true, module_id_generator: ->(input){
+      id = input.path.dup
+      id.gsub!(/^coffeescript\//, '')
+      RequireRewriteFilter.module_id(id)
+    }
+    if ENV['RACK_ENV'] == 'production'
+      uglify
+    end
+    concat "javascript/tent.js"
+  end
+
+
   match "**/*.handlebars" do
     handlebars :key_name_proc => proc { |input| 
       %r{template/(.*).handlebars}.match(input.path)
@@ -186,11 +200,18 @@ input "lib" do
     concat 'stylesheet/tent.css'
   end  
 
+  match "stylesheet/**/*.css" do
+    concat 'stylesheet/tent.css'
+  end
+
   match /^static\// do
     concat do |filename|
       filename.gsub(/^static\//, '')
     end
   end
+
+  filter Rake::Pipeline::ConcatFilter
+
 end
 
 input ['vendor'] do

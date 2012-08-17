@@ -1,0 +1,16 @@
+<label class="control-label">{{view.label}}</label>
+<div class="controls">
+  <div class="input-prepend">
+    {{#if view.hasPrefix}}  
+      <span class="add-on">{{view.prefix}}</span>
+    {{/if}}     
+    {{#if view.isEditable}}
+      {{view Ember.TextField classBinding="view.inputSizeClass" valueBinding="view.value"}}
+    {{else}}
+      <span {{bindAttr class="view.unEditableClass view.inputSizeClass"}}>{{view.value}}</span>
+    {{/if}}
+  </div>
+  {{#if view.hasErrors}}
+    <span class="help-inline">{{view.validationErrors}}</span>
+  {{/if}}  
+</div>

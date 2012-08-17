@@ -1,0 +1,11 @@
+<div class="modal-header">
+  <a href="#" class="close" click="close">x</a>
+  {{view Tent.ModalHeader}}
+</div>
+<div class="modal-body">
+  {{view Tent.ModalBody}}
+</div>
+<div class="modal-footer">
+  {{#if view.secondary}}<a href="#" class="btn btn-secondary" click="secondary">{{view.secondary}}</a>{{/if}}
+  {{#if view.primary}}<a href="#" class="btn btn-primary" click="primary">{{view.primary}}</a>{{/if}}
+</div>

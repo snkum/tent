@@ -1,0 +1,13 @@
+<label class="control-label">{{view.label}}</label>
+
+<div class="controls">
+  {{view Ember.Select 
+         contentBinding="view._list" 
+         classBinding="view.inputSizeClass" 
+         optionLabelPathBinding="view.optionLabelPath" 
+         optionValuePathBinding ="view.optionValuePath" 
+         selectionBinding="view.list.selected"
+         multipleBinding="view.multiple"
+         promptBinding = "view._prompt" 
+         valueBinding = "view.value"}}  
+</div>

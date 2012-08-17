@@ -1,0 +1,9 @@
+<thead>
+	{{#if view.isEditable}} <th></th> {{/if}}
+	{{collection contentBinding="view.visibleHeaders" itemViewClass="Tent.TableHeader"}}
+</thead>
+{{#if view.isEditable}}
+  {{collection contentBinding="view.list" tagName="tbody" itemViewClass="Tent.TableRow"}}
+{{else}}
+  {{collection contentBinding="view.defaultSelection" tagName="tbody" itemViewClass="Tent.TableRow"}}
+{{/if}}

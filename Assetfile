@@ -1,0 +1,226 @@
+require "rake-pipeline-web-filters"
+require "json"
+require "uglifier"
+require "execjs"
+require 'compass'
+
+class RewriteCoffeeRequireFilter < Rake::Pipeline::Filter
+  def generate_output(inputs, output)
+    inputs.each do |input|
+      result = input.read
+      result.gsub!(/require\ /, 'window.minispade.require ')
+      puts "Here"
+      output.write(result)
+    end
+  end
+end
+
+class RequireRewriteFilter < Rake::Pipeline::Filter
+  def generate_output(inputs, output)
+    inputs.each do |input|
+      code = input.read
+      resolve_relative_references(code, input.path)
+      output.write code
+    end
+  end
+
+  def resolve_relative_references(code, filepath)
+    this_dir = File.dirname(filepath)
+    this_dir = (this_dir == '.')? "": "#{this_dir}/"
+    code.gsub!(/^\s*(require|requireAll)\s*\(\s*[\'\"]([^\'\"]*)[\'\"]\s*\)\s*/) do |req|
+      path =  $2[0] == '.'? "#{this_dir}#{$2}": $2
+      path = File.expand_path(path).sub("#{Dir.pwd}/", '')
+      path.gsub!(%r{/index$|^coffeescript/|^packages/|^javascript/}, '')
+      "require('#{path}')"
+    end
+    code
+  end
+
+  def self.module_id(filename)
+    filename.gsub(%r#(^coffeescript/|^javascript[s]*/|^packages/|\.js|\.handlebars|/index\..+)#, '')
+  end
+end
+
+module GemHelpers
+  def self.gem_path(gem)
+    Gem.loaded_specs[gem].full_gem_path
+  end
+
+  def self.sass_load_paths(*gems)
+    gems.collect {|gem| "#{gem_path(gem)}/vendor/assets/stylesheets"}
+  end
+end
+
+def load_gem_assets(output_dir, *gems)
+  tmpdir = 'tmp/rakep-gem-assets'
+  output tmpdir
+
+  gems.each do |gem|
+    assets_path = "#{GemHelpers.gem_path(gem)}/vendor/assets"
+    input assets_path do
+      match "**/javascript*/**/*.js" do
+        minispade string: true, rewrite_requires: true, module_id_generator: ->(input){
+          "#{gem}/#{RequireRewriteFilter.module_id(input.path)}"
+        }
+        concat "javascript/#{gem}.js"
+      end
+
+      match "images/*" do
+        concat
+      end
+    end
+  end
+
+  output output_dir
+
+  input tmpdir do
+    match "javascript/*.js" do
+      concat "javascript/gem-dependencies.js"
+    end
+
+    match "images/*" do
+      concat
+    end
+  end
+end
+
+class TentLicenseFilter < Rake::Pipeline::Filter
+  def license
+    @license ||= File.read("license/license.js")
+  end
+
+  def generate_output(inputs, output)
+    inputs.each do |input|
+      file = File.read(input.fullpath)
+      output.write "#{license}\n\n#{file}"
+    end
+  end
+end
+
+class VersionInfo < Rake::Pipeline::Filter
+  def version_info
+    @version_info ||= begin
+      latest_tag = `git describe --tags`
+      last_commit = `git log -n 1 --format="%h (%ci)"`
+
+      out = "// Version: #{latest_tag}"
+      out << "// Last commit: #{last_commit}"
+      out
+    end
+  end
+
+  def generate_output(inputs, output)
+    inputs.each do |input|
+      file = File.read(input.fullpath)
+      output.write "#{version_info}\n\n#{file}"
+    end
+  end
+end
+
+Compass.configuration do |c|
+  c.project_path = 'lib'
+  c.http_generated_images_path = '/public/images'
+end
+
+load_gem_assets('public', 'bootstrap-sass')
+
+output "public"
+
+input "test" do
+  match /(unit|lib|coffeescript)(\/[^\/]*)*([^\/]*).coffee/ do
+    coffee_script
+    minispade :rewrite_requires => true, :string => true, :module_id_generator => proc { |input|
+      id = input.path.dup
+      id.sub!(/\.(coffee|js)$/, '')
+      id.sub!(/\/index$/, '')
+      id.sub!(/^unit/, '~test')
+      id.sub!(/^lib/, 'lib/~test')
+      id
+    }
+    concat "javascript/tent-tests.js"
+  end
+
+  match /^static\// do
+    concat do |filename|
+      filename.gsub(/^static\//, '')
+    end
+  end
+end
+
+input "lib" do
+  match "coffeescript/**/*.coffee" do
+    coffee_script
+    filter RequireRewriteFilter
+    minispade string: true, rewrite_requires: true, module_id_generator: ->(input){
+      id = input.path.dup
+      id.gsub!(/^coffeescript\//, '')
+      RequireRewriteFilter.module_id(id)
+    }
+    if ENV['RACK_ENV'] == 'production'
+      uglify
+    end
+    concat "javascript/tent.js"
+  end
+
+  match "vendor/**/*.js" do
+    filter RequireRewriteFilter
+    minispade string: true, rewrite_requires: true, module_id_generator: ->(input){
+      id = input.path.dup
+      id.gsub!(/^coffeescript\//, '')
+      RequireRewriteFilter.module_id(id)
+    }
+    if ENV['RACK_ENV'] == 'production'
+      uglify
+    end
+    concat "javascript/tent.js"
+  end
+
+
+
+  match "**/*.handlebars" do
+    handlebars :key_name_proc => proc { |input| 
+      %r{template/(.*).handlebars}.match(input.path)
+      $1
+    }
+    filter RequireRewriteFilter
+    minispade string: true, rewrite_requires: true, module_id_generator: ->(input){
+      RequireRewriteFilter.module_id(input.path)
+    }
+    if ENV['RACK_ENV'] == 'production'
+      uglify
+    end
+    concat "javascript/tent.js"
+  end
+
+  match /^stylesheet\/tent.scss/ do
+    sass additional_load_paths: 'lib/stylesheet/',
+      load_paths: GemHelpers.sass_load_paths('bootstrap-sass')
+    if ENV['RACK_ENV'] == 'production'
+      yui_css
+    end
+    concat 'stylesheet/tent.css'
+  end  
+
+  match "stylesheet/**/*.css" do
+    concat 'stylesheet/tent.css'
+  end
+
+  match /^static\// do
+    concat do |filename|
+      filename.gsub(/^static\//, '')
+    end
+  end
+
+  filter Rake::Pipeline::ConcatFilter
+end
+
+input ['vendor'] do
+  match '**/*' do
+    minispade string: true, rewrite_requires: true, module_id_generator: ->(input){
+      /([^\/]*)\//.match(input.path)[1]
+    }
+    concat 'javascript/dependencies.js'
+  end
+end
+
+# vim: filetype=ruby

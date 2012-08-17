@@ -4,9 +4,29 @@
 .tent-button-group{
   position: relative; 
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> merging/feature/adding_slickgrid
 .tent-selected{
   background-color: #CCC;
 }
 .tent-width-small{
   width: 20px;
+<<<<<<< HEAD
 }
+=======
+}
+
+.slick-row {
+	&:hover {
+		background-color: whiteSmoke;
+	}
+}
+.slick-cell {
+	&.selected {
+		background-color: #eff;
+	}
+}
+
+>>>>>>> merging/feature/adding_slickgrid

@@ -6,6 +6,7 @@
 }
 
 .tent-selected{
+
   background-color: #CCC;
 }
 
@@ -22,5 +23,11 @@
 	&.selected {
 		background-color: #eff;
 	}
+
+}
+.tent-heading{
+  font:bold 15px arial,sans-serif;  
+  
+
 }
 

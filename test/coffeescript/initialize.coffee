@@ -64,7 +64,12 @@
 		Ember.Object.create({label: "Edit", action: "editEvent"}),
 		Ember.Object.create({label: "Delete", action: "deleteEvent"})
 	]
-
+	Pad.dummy = [
+	  Ember.Object.create({Name:'Favourites', One: 'News feed', Two:'Home', Three:''}),
+	  Ember.Object.create({Name:'Interests', One: 'Lan Games', Two:'Movies', Three:'Cards'})
+	  Ember.Object.create({Name:'Groups', One: 'Eceans', Two:'Soccer', Three:''})
+	]
+  
 	Pad.groupTarget = Ember.Object.create({
 		addEvent: -> 
 			alert("action add clicked");
@@ -88,4 +93,3 @@
 	)
 
 )(minispade)
-

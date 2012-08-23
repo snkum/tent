@@ -32,8 +32,14 @@
 		Ember.Object.create({name: 'Amit', age: 30})
 		Ember.Object.create({name: 'Khajan', age: 31})          
 	]
-
-	selectedPerson = {}
+	Pad.display= []
+	tmp= [  Ember.Object.create({Name: 'One'})
+    Ember.Object.create({Name: 'Two'})
+    Ember.Object.create({Name: 'Three'})
+    Ember.Object.create({Name: 'Four'})
+    Ember.Object.create({Name: 'Five'})          
+  ]
+  selectedPerson = {}
 	Tent.Enumeration =
 		YESNO: ['Yes', 'No']
 		STATES: ['AL', 'AK', 'CA', 'GA', 'HI']

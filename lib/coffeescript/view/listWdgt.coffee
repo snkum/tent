@@ -9,16 +9,22 @@ require '../template/list_row'
 
 Tent.List = Ember.View.extend
   tagName: 'list'
-  templateName:'selectable_list'
+  templateName: 'selectable_list'
+  classNames: ['move','fixed-top']
   visibleList: (->
     @get('listhead').split(',')
   ).property('listhead')
+  
+  move: (->
+    'tent-slidein' if @navClick is true
+  ).property('')
   
   init: ->
     @_super()
     @set('_list', @get('list'))
     @set('_list.selected',null)
     @set('entrySelected',null)
+    
 
     
   
@@ -58,7 +64,10 @@ Tent.ListCell = Ember.View.extend
     @set('selected',null)
   
   isHeading: (->
-    'tent-heading'  if @get('content') is 'Name'
+    if @get('content') is 'Name'
+      'tent-heading'
+    else
+      'tent-list'
   ).property('val')
   
   parentList: (-> @get('parentView.parentView')).property()

@@ -32,6 +32,10 @@
           {{view Tent.Checkbox label="Agree to privacy policy" checkedBinding="Pad.privacyPolicy"}}
         {{/view}}
       {{/view}}
+      
+      {{#view Tent.Panel span="4"}}
+		{{view Tent.NavBar setObjBinding="Pad.display" }}
+	  {{/view}}
       {{#view Tent.Panel span="8" name="Main Content"}}
         <p>Tag {{view Tent.Tag text="Important"}}</p>
         <h3>Table</h3>
@@ -76,12 +80,14 @@
     	{{view Tent.Button label="Label missing in button options" type="primary" optionsBinding="Pad.optionsMissingLabel"}}
     	<br/>
     	{{view Tent.Button label="Label and Target missing in button options" optionsBinding="Pad.optionsMissingLabel" contentBinding="Pad.groupTarget"}}
-    
+    	
     	<p id="click-label"></p>
-			{{view Tent.List listBinding="Pad.dummy" listhead="Name,One,Two,Three" }}
+		
+		
       {{/view}}
 
       {{view Tent.ModalPane text="Do you want to perform this action!!!" header="My Heading" primary="OK" secondary="Cancel"}}
+		
 
     </script>
 

@@ -8,6 +8,10 @@ require '../template/nav'
 
 Tent.NavBar = Ember.View.extend
   templateName: 'nav'
+  classNames:['tent-menu-container']
+  dummy: [Ember.Object.create({Name:'Favourites', One: 'News feed', Two:'Home', Three:''})
+        Ember.Object.create({Name:'Interests', One: 'Lan Games', Two:'Movies', Three:'Cards'})
+        Ember.Object.create({Name:'Groups', One: 'Eceans', Two:'Soccer', Three:''})]
   
   
 Tent.NavList = Ember.View.extend
@@ -65,23 +69,16 @@ Tent.NavLink = Ember.View.extend
 
 Tent.ButtonIconned = Ember.View.extend
   tagName: 'button'
-  tmp: [Ember.Object.create({Name:'Favourites', One: 'News feed', Two:'Home', Three:''})
-        Ember.Object.create({Name:'Interests', One: 'Lan Games', Two:'Movies', Three:'Cards'})
-        Ember.Object.create({Name:'Groups', One: 'Eceans', Two:'Soccer', Three:''})]
-        
+          
   count: 0
   click: ->
     @count = @count+1   
     if @count%2 is 1
-      @get('parentView').$().addClass('tent-slidein')
-      if $('list.move.fixed-top')[0] is `undefined`
-        @set('parentView.dummy', @tmp)
-        @get('parentView').$().addClass('tent-slidein')
+      if @count is 1
+        @get('parentView').$('.navbar-container').addClass('tent-slidein')
+        $('.list-container').css 'display', 'block'
       else 
-        $('list.move.fixed-top').css('display','')
-        @get('parentView').$().removeClass('tent-slideout').addClass('tent-slidein')
+        @get('parentView').$('.navbar-container').removeClass('tent-slideout').addClass('tent-slidein')
     else
-      @get('parentView').$().removeClass('tent-slidein').addClass('tent-slideout')
-      setTimeout (->
-        $("list.move.fixed-top").css "display", "none"
-      ), 5000
+      @get('parentView').$('.navbar-container').removeClass('tent-slidein').addClass('tent-slideout')
+    

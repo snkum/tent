@@ -1,7 +1,7 @@
-{{#if view.dummy}}
+<div class="list-container">
   {{view Tent.List listBinding="view.dummy" entrySelectedBinding="view.clicked" listhead="Name,One,Two,Three" navClick=true}}
-{{/if}}
-
+</div>
+<div class="navbar-container">
 <div class="navbar">
 <div class="navbar-inner">
 	{{view Tent.ButtonIconned}}
@@ -12,6 +12,11 @@
 	</div>
 </div>
 </div>
+<div class="ember-view">
 {{#if view.clicked}}
-This is the display page for {{view.clicked}}
+	<b>This is the display page for {{view.clicked}}</b>
+{{else}}
+	<b>Welcome..... This is the main page</b>
 {{/if}}
+</div>
+</div>

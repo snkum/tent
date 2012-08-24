@@ -33,9 +33,7 @@
         {{/view}}
       {{/view}}
       
-      {{#view Tent.Panel span="4"}}
-		{{view Tent.NavBar setObjBinding="Pad.display" }}
-	  {{/view}}
+      
       {{#view Tent.Panel span="8" name="Main Content"}}
         <p>Tag {{view Tent.Tag text="Important"}}</p>
         <h3>Table</h3>
@@ -85,11 +83,12 @@
 		
 		
       {{/view}}
-
+		{{view Tent.NavBar setObjBinding="Pad.display" }}
       {{view Tent.ModalPane text="Do you want to perform this action!!!" header="My Heading" primary="OK" secondary="Cancel"}}
 		
 
     </script>
+	
 
   </body>
 </html>

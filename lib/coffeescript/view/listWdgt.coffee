@@ -10,14 +10,13 @@ require '../template/list_row'
 Tent.List = Ember.View.extend
   tagName: 'list'
   templateName: 'selectable_list'
-  classNames: ['move','fixed-top']
   visibleList: (->
     @get('listhead').split(',')
   ).property('listhead')
   
-  move: (->
-    'tent-slidein' if @navClick is true
-  ).property('')
+  # move: (->
+    # 'tent-slidein' if @navClick is true
+  # ).property('')
   
   init: ->
     @_super()
@@ -25,10 +24,6 @@ Tent.List = Ember.View.extend
     @set('_list.selected',null)
     @set('entrySelected',null)
     
-
-    
-  
-        
 Tent.ListCurrent = Ember.View.extend
   tagName: 'ul'
   classNames: ['nav', 'nav-pills', 'nav-stacked']

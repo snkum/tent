@@ -9,6 +9,7 @@ require '../template/nav'
 Tent.NavBar = Ember.View.extend
   templateName: 'nav'
   classNames:['tent-menu-container']
+  oldLabel: 'tent'
   dummy: [Ember.Object.create({Name:'Favourites', One: 'News feed', Two:'Home', Three:''})
         Ember.Object.create({Name:'Interests', One: 'Lan Games', Two:'Movies', Three:'Cards'})
         Ember.Object.create({Name:'Groups', One: 'Eceans', Two:'Soccer', Three:''})]
@@ -69,16 +70,29 @@ Tent.NavLink = Ember.View.extend
 
 Tent.ButtonIconned = Ember.View.extend
   tagName: 'button'
-          
   count: 0
+     
   click: ->
-    @count = @count+1   
-    if @count%2 is 1
-      if @count is 1
-        @get('parentView').$('.navbar-container').addClass('tent-slidein')
-        $('.list-container').css 'display', 'block'
-      else 
-        @get('parentView').$('.navbar-container').removeClass('tent-slideout').addClass('tent-slidein')
+    console.log @label
+    if @label is 'mov'
+      @count = @count+1   
+      if @count%2 is 1
+        if @count is 1
+          @get('parentView').$('.navbar-container').addClass('tent-slidein')
+          $('.list-container').css 'display', 'block'
+        else 
+          @get('parentView').$('.navbar-container').removeClass('tent-slideout').addClass('tent-slidein')
+      else
+        @get('parentView').$('.navbar-container').removeClass('tent-slidein').addClass('tent-slideout')
+        
     else
-      @get('parentView').$('.navbar-container').removeClass('tent-slidein').addClass('tent-slideout')
+      console.log @label
+      console.log @get('parentView').get('oldLabel')
+      if @get('parentView').get('oldLabel') isnt @label
+        $('.'+@get('parentView').get('oldLabel')+'-menu-container').addClass(@label+'-menu-container').removeClass(@get('parentView').get('oldLabel')+'-menu-container')
+        @set('parentView.oldLabel',@label)
+        console.log "Done"
+        console.log @label
+        console.log @get('parentView').get('oldLabel')
+      
     

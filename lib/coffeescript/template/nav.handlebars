@@ -4,7 +4,9 @@
 <div class="navbar-container">
 <div class="navbar">
 <div class="navbar-inner">
-	{{view Tent.ButtonIconned}}
+	{{view Tent.ButtonIconned label="mov"}}
+	<span>Now you can change the style</span>
+	
     <div class="container">
 		<div class="nav-collapse collapse">
 			{{view Tent.NavList listBinding="view.setObj"}}
@@ -18,5 +20,8 @@
 {{else}}
 	<b>Welcome..... This is the main page</b>
 {{/if}}
+{{#view Tent.ButtonIconned label="tent"}}Default{{/view}}
+{{#view Tent.ButtonIconned label="fb"}}Facebook{{/view}}
+{{#view Tent.ButtonIconned label="gwt"}}Google{{/view}}</bottom>
 </div>
 </div>

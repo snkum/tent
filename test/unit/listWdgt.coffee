@@ -33,10 +33,9 @@ test 'Ensure List is rendered', ->
   ok view.$('li')?, 'li gets rendered'
   lists = view.$('ul')
   equal lists.length, 3, 'all the lists get rendered'
-  equal view.$('li:eq(0)').text(), "Favourites", 'Name column gets rendered' 
-  equal view.$('li:eq(1)').text(), "News feed", 'Entry One gets rendered' 
-  equal view.$('li:eq(2)').text(), "Home", 'Entry Two gets rendered'
-  equal view.$('li:eq(3)').text(), "", 'Entry Three gets rendered'
+  equal view.$('a:eq(0)').text(), "Favourites", 'Name column gets rendered' 
+  equal view.$('a:eq(1)').text(), "News feed", 'Entry One gets rendered' 
+  equal view.$('a:eq(2)').text(), "Home", 'Entry Two gets rendered'
   equal Ember.View.views[view.$('list').attr('id')].get('selection'),
     undefined,'none of the entry is selected'
   
@@ -61,6 +60,7 @@ test "Ensure a single list will be used", ->
   
   EntryView2.mouseUp()
   equal Ember.View.views[view.$('list').attr('id')].get('_list.selected'), ListView2.get('content') , 'selected list changed. Updated to list 2'
+
 test "Ensure Single Entry Selection from all lists", ->
   dummy = [Ember.Object.create({Name:'Favourites', One: 'News feed', Two:'Home', Three:''}),
           Ember.Object.create({Name:'Interests', One: 'Lan Games', Two:'Movies', Three:'Cards'})

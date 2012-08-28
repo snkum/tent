@@ -1,0 +1,34 @@
+<div class="list-container">
+  {{view Ember.TextField valueBinding="view.value"}}
+  {{#view Tent.ButtonIconned label="tent"}}Search{{/view}}
+  {{view Tent.List listBinding="view.dummy" entrySelectedBinding="view.clicked" listhead="Name,One,Two,Three" entryClickedBinding="view.update"}}
+</div>
+<div class="navbar-container">
+<div class="navbar">
+<div class="navbar-inner">
+	{{view Tent.ButtonIconned label="mov"}}
+	<div class="container">
+		<div class="nav-collapse collapse">
+			{{view Tent.NavList listBinding="view.setObj"}}
+		</div>
+	</div>
+	
+</div>
+</div>
+
+{{#if view.clicked}}
+	<b>{{view.clicked}}</b>
+	<br>
+	<br>
+	This is the display page for {{view.clicked}}
+{{else}}
+	<b>Welcome..... This is the main page</b>
+{{/if}}
+<br>
+<br>
+<span>Now you can change the style</span>
+<br>
+{{#view Tent.ButtonIconned label="tent"}}Default{{/view}}
+{{#view Tent.ButtonIconned label="fb"}}Facebook{{/view}}
+{{#view Tent.ButtonIconned label="gwt"}}Google{{/view}}</bottom>
+</div>

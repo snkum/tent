@@ -32,8 +32,7 @@
 		Ember.Object.create({name: 'Amit', age: 30})
 		Ember.Object.create({name: 'Khajan', age: 31})          
 	]
-	Pad.display= []
-	tmp= [  Ember.Object.create({Name: 'One'})
+	Pad.display= [ Ember.Object.create({Name: 'One'})
     Ember.Object.create({Name: 'Two'})
     Ember.Object.create({Name: 'Three'})
     Ember.Object.create({Name: 'Four'})
@@ -71,9 +70,9 @@
 		Ember.Object.create({label: "Delete", action: "deleteEvent"})
 	]
 	Pad.dummy = [
-	  Ember.Object.create({Name:'Favourites', One: 'News feed', Two:'Home', Three:''}),
-	  Ember.Object.create({Name:'Interests', One: 'Lan Games', Two:'Movies', Three:'Cards'})
-	  Ember.Object.create({Name:'Groups', One: 'Eceans', Two:'Soccer', Three:''})
+	  Ember.Object.create({Name:'Favourites',iconName:'/images/icon.jpg', One: 'News feed', iconOne:'/images/icon.jpg', Two:'Home', iconTwo:'/images/icon.jpg', Three:''}),
+	  Ember.Object.create({Name:'Interests', iconName:'/images/icon.jpg', One: 'Lan Games', iconOne:'/images/icon.jpg', Two:'Movies', iconTwo:'/images/icon.jpg',Three:'Cards', iconThree:'/images/icon.jpg',})
+	  Ember.Object.create({Name:'Groups', iconName:'/images/icon.jpg', One: 'Eceans', iconOne:'/images/icon.jpg', Two:'Soccer', iconTwo:'/images/icon.jpg', Three:''})
 	]
   
 	Pad.groupTarget = Ember.Object.create({

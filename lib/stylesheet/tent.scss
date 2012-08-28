@@ -2,6 +2,8 @@
 @import "bootstrap-responsive";
 
 $slideTime: 0.5s;
+$start: 0%;
+$stop: 90%;
 .tent-button-group{
   position: relative; 
 }
@@ -62,67 +64,114 @@ $slideTime: 0.5s;
   top: 0;
   left: 0;
   height:400px; 
-  .tent-list{
-    
-  }
+  width: 500px;
+  overflow-x:hidden;
   .list-container{
     position: absolute;
     top: 0;
     left: 0;
-    width:200px;
+    width: $stop;
     display: none;
     font-size:120%;
+    background-image: -webkit-linear-gradient(top, salmon, lightcoral);
     
   }
   .navbar-container{
     position: absolute;
     top: 0;
     left: 0;
-    width: 1600px;
+    width: inherit;
     height: inherit;
     background-image: url('../images/background_whitewashed.png');
     font-size:200%;
+    .navbar {
+        float:none;
+        color: white;
+        .navbar-inner{
+          
+          background-image: -webkit-linear-gradient(top, salmon, lightcoral);
+          button {
+            float:left;
+            margin-right:40px;
+          }
+          li {
+            display:inline;
+          }
+          span {
+            padding-left: 5px;
+          }
+          a {
+            color:turquoise;
+          }
+        }
+
   }
+}
 }
 
 .fb-menu-container {
   position:fixed;
   top: 0;
   left: 0;
-  height:400px; 
-  .tent-list {
-    background: #f7f7f7;  
-    border: #cccccc;
-    color: #000000;
-    font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
-    a{
-      color: black;
-    }  
-  
-  }
-  .tent-heading {
-    background: #3b5998;
-    a{
-      color: white;
-    }
-  } 
+  height:400px;
+  width: 500px;
+  overflow-x: hidden; 
+   
   .list-container{
     position: absolute;
     top: 0;
     left: 0;
-    width:200px;
+    width: $stop;
     display: none;
     font-size:120%;
-    
+    background: grey;
+    .tent-list {
+        background: #f7f7f7;  
+        border: #cccccc;
+        color: #000000;
+        font-family: "lucida grande", tahoma, verdana, arial, sans-serif;
+        a{
+          color: black;
+        }  
+  
+      }
+    .tent-heading {
+        background: #3b5998;
+        a{
+          color: white;
+        }
+    }  
   }
   .navbar-container{
     position: absolute;
     top: 0;
     left: 0;
-    width: 1600px;
     height: inherit;
+    width: inherit;
     background-image: url('../images/background_whitewashed.png');
     font-size:200%;
+    .navbar {
+        float:none;
+        color: white;
+        .navbar-inner{
+          
+          background-image: -webkit-linear-gradient(top, #3b5998, #3b5998);  
+          button {
+            float:left;
+            margin-right:40px;
+          }
+          li {
+            display:inline;
+          }
+          span {
+            padding: 5px;
+          }
+          a {
+            color:yellowGreen;
+          }
+      }
+    }
+
   }
 }
 
@@ -131,6 +180,8 @@ $slideTime: 0.5s;
   top: 0;
   left: 0;
   height:400px; 
+  width: 500px;
+  overflow-x:hidden;
   .tent-list {
     background: #FFFFFF;  
     border: #cccccc;
@@ -151,29 +202,51 @@ $slideTime: 0.5s;
     position: absolute;
     top: 0;
     left: 0;
-    width:200px;
+    width: $stop;
     display: none;
     font-size:120%;
-    
-  }
+    background-image: -webkit-linear-gradient(top, green , darkgreen);
+}
   .navbar-container{
     position: absolute;
-    top: 0;
+    top: 40;
     left: 0;
-    width: 1600px;
+    width: inherit;
     height: inherit;
     background-image: url('../images/background_whitewashed.png');
     font-size:200%;
+    
+    .navbar {
+        float:none;
+        color: beige;
+        .navbar-inner {
+            background-image: -webkit-linear-gradient(top, green , darkgreen);
+           button {
+            float:left;
+            margin-right:40px;
+          }
+            li {
+              display:inline;
+            }
+            span {
+              padding: 5px;
+            }
+            a {
+              color:paleGoldenrod
+            }
+        }
+    }
   }
+  
 }
 
 .tent-slidein
 {
 animation:movin $slideTime;
-transform: translateX(10%);
--webkit-transform: translateX(10%);
--moz-transform: translateX(10%);
--o-transform: translateX(10%);
+transform: translateX($stop);
+-webkit-transform: translateX($stop);
+-moz-transform: translateX($stop);
+-o-transform: translateX($stop);
 -moz-animation:movin $slideTime; /* Firefox */
 -webkit-animation:movin $slideTime; /* Safari and Chrome */
 -o-animation:movin $slideTime; /* Opera */
@@ -182,10 +255,10 @@ transform: translateX(10%);
 @keyframes movin
 {
 from {
-    transform: translateX(0%);
+    transform: translateX($start);
   }
   to {
-    transform: translateX(10%);
+    transform: translateX($stop);
 
   }
 }
@@ -193,10 +266,10 @@ from {
 @-moz-keyframes movin /* Firefox */
 {
 from {
-    -moz-transform: translateX(0%);
+    -moz-transform: translateX($start);
   }
   to {
-    -moz-transform: translateX(10%);
+    -moz-transform: translateX($stop);
 
   }
 }
@@ -204,10 +277,10 @@ from {
 @-webkit-keyframes movin /* Safari and Chrome */
 {
 from {
-    -webkit-transform: translateX(0%);
+    -webkit-transform: translateX($start);
   }
   to {
-    -webkit-transform: translateX(10%);
+    -webkit-transform: translateX($stop);
 
   }
 }
@@ -216,10 +289,10 @@ from {
 {
 
 from {
-    -o-transform: translateX(0%);
+    -o-transform: translateX($start);
   }
   to {
-    -o-transform: translateX(10%);
+    -o-transform: translateX($stop);
   }
 }
 
@@ -227,10 +300,10 @@ from {
 .tent-slideout
 {
 animation:movout $slideTime;
-transform: translateX(0%);
--webkit-transform: translateX(0%);
--moz-transform: translateX(0%);
--o-transform: translateX(0%);
+transform: translateX($start);
+-webkit-transform: translateX($start);
+-moz-transform: translateX($start);
+-o-transform: translateX($start);
 -moz-animation:movout $slideTime; /* Firefox */
 -webkit-animation:movout $slideTime; /* Safari and Chrome */
 -o-animation:movout $slideTime; /* Opera */
@@ -240,10 +313,10 @@ transform: translateX(0%);
 @keyframes movout
 {
 from {
-    transform: translateX(10%);
+    transform: translateX($stop);
   }
   to {
-    transform: translateX(0%);
+    transform: translateX($start);
 
   }
 }
@@ -251,10 +324,10 @@ from {
 @-moz-keyframes movout /* Firefox */
 {
 from {
-    -moz-transform: translateX(10%);
+    -moz-transform: translateX($stop);
   }
   to {
-    -moz-transform: translateX(0%);
+    -moz-transform: translateX($start);
 
   }
 }
@@ -262,10 +335,10 @@ from {
 @-webkit-keyframes movout /* Safari and Chrome */
 {
 from {
-    -webkit-transform: translateX(10%);
+    -webkit-transform: translateX($stop);
   }
   to {
-    -webkit-transform: translateX(0%);
+    -webkit-transform: translateX($start);
 
   }
 }
@@ -274,9 +347,9 @@ from {
 {
 
 from {
-    -o-transform: translateX(10%);
+    -o-transform: translateX($stop);
   }
   to {
-    -o-transform: translateX(0%);
+    -o-transform: translateX($start);
   }
 }

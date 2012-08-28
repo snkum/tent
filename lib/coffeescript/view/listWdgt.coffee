@@ -6,6 +6,7 @@
 
 require '../template/selectable_list'
 require '../template/list_row'
+require '../template/list_cell'
 
 Tent.List = Ember.View.extend
   tagName: 'list'
@@ -14,15 +15,12 @@ Tent.List = Ember.View.extend
     @get('listhead').split(',')
   ).property('listhead')
   
-  # move: (->
-    # 'tent-slidein' if @navClick is true
-  # ).property('')
-  
   init: ->
     @_super()
     @set('_list', @get('list'))
     @set('_list.selected',null)
     @set('entrySelected',null)
+    @set('entryClicked',0)
     
 Tent.ListCurrent = Ember.View.extend
   tagName: 'ul'
@@ -35,6 +33,7 @@ Tent.ListCurrent = Ember.View.extend
   allLists: (-> @get('parentView.parentView')).property()
   select: (tmp) ->
     @set('allLists._list.selected', @get('content'))
+    @set('allLists.entryClicked', @get('allLists.entryClicked')+1)
     @set('allLists.entrySelected',tmp)
   
   selectionDidChange: (->
@@ -50,7 +49,7 @@ Tent.ListCurrent = Ember.View.extend
       
 Tent.ListCell = Ember.View.extend
   tagName: 'li'
-  defaultTemplate: Ember.Handlebars.compile('<a>{{view.value}}</a>')
+  templateName: 'list_cell'
   classNameBindings: ['isHeading','isSelected']
   
   init: ->
@@ -74,9 +73,14 @@ Tent.ListCell = Ember.View.extend
     str = @get('parentList.content')[@get('content')]
     @set('selected',str)    
     if @get('content') isnt 'Name'
-      @get('parentList').select(str) 
+      @get('parentList').select(str)
       
   value: (->
-    cell = @get('parentView.parentView.content')
+    cell = @get('parentList.content')
     if cell then cell[@get('val')] else ''
   ).property('content', 'parentView')
+  
+  icon: (->
+    cell = @get('parentList.content')
+    if cell then cell['icon'+@get('val')] else ''
+  ).property('content','parentView')  

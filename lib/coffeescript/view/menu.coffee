@@ -9,15 +9,21 @@ require '../template/menu'
 Tent.Menu = Ember.View.extend
   tagName: 'menu'
   classNames:['tent-menu-container']
+  classNameBindings:['updateClass']
   templateName: 'menu'
-  oldLabel: 'tent'
-  listClick: 0
+  listClick: 1
   clicked: null
   clickChange: (->
     if @clicked and @update isnt 0
-      @set('listClick', 2)
+      @set('listClick', 3)
       $('.navbar-container').removeClass('tent-slidein').addClass('tent-slideout')
   ).observes('clicked','update')
+  
+  updateClass: (->
+    return 'gwt-menu-container' if @get('label') is 'gwt'
+    return 'fb-menu-container' if @get('label') is 'fb'
+    'tent-menu-container'
+  ).property('label') 
   
 Tent.NavList = Ember.View.extend
   tagName: 'ul'
@@ -45,7 +51,7 @@ Tent.NavList = Ember.View.extend
       
 Tent.NavCell = Ember.View.extend
   tagName: 'li'
-  defaultTemplate: Ember.Handlebars.compile('{{view Tent.NavLink cellBinding="view.content"}}')
+  defaultTemplate: Ember.Handlebars.compile('<a><span>{{view.value}}</span></a>')
   classNameBindings: ['isSelected']
   
   init: ->
@@ -59,37 +65,42 @@ Tent.NavCell = Ember.View.extend
   ).property('parentList.selection')
   
   mouseUp: ->
-    @get('parentList').select(@get('content')) 
+    @get('parentList').select(@get('content'))
+  
+  value: (->
+    if @val then @val['Name'] else ''
+  ).property('val') 
       
   
   
-Tent.NavLink = Ember.View.extend
-  tagName: 'a'
-  defaultTemplate: Ember.Handlebars.compile('<span>{{view.value}}</span>')
-  
-  value: (->
-    if @cell then @cell['Name'] else ''
-  ).property('cell')
+# Tent.NavLink = Ember.View.extend
+  # tagName: 'a'
+  # defaultTemplate: Ember.Handlebars.compile('<span>{{view.value}}</span>')
+#   {{view Tent.NavLink cellBinding="view.content"}}
+  # value: (->
+    # if @cell then @cell['Name'] else ''
+  # ).property('cell')
   
 
 Tent.ButtonIconned = Ember.View.extend
   tagName: 'button'
   countBinding: 'parentView.listClick'
-     
+  # labelBinding: 'parentView.oldlabel' 
   click: ->
     if @label is 'mov'
-      @set('count', @count+1)   
+      # @set('count', @count+1)   
       if @count%2 is 1
         if @count is 1
           @get('parentView').$('.navbar-container').addClass('tent-slidein')
           $('.list-container').css 'display', 'block'
         else 
           @get('parentView').$('.navbar-container').removeClass('tent-slideout').addClass('tent-slidein')
+          
+        @set('count',0)
       else
         @get('parentView').$('.navbar-container').removeClass('tent-slidein').addClass('tent-slideout')
-        
+        @set('count',3)
     else
-      if @get('parentView').get('oldLabel') isnt @label
-        $('.'+@get('parentView').get('oldLabel')+'-menu-container').addClass(@label+'-menu-container').removeClass(@get('parentView').get('oldLabel')+'-menu-container')
-        @set('parentView.oldLabel',@label)     
+      @set('parentView.label', @label)
+           
     

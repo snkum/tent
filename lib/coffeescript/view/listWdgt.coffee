@@ -20,7 +20,7 @@ Tent.List = Ember.View.extend
     @set('_list', @get('list'))
     @set('_list.selected',null)
     @set('entrySelected',null)
-    @set('entryClicked',0)
+    @set('entryClicked',1)
     
 Tent.ListCurrent = Ember.View.extend
   tagName: 'ul'
@@ -71,7 +71,11 @@ Tent.ListCell = Ember.View.extend
   
   mouseUp: ->
     str = @get('parentList.content')[@get('content')]
-    @set('selected',str)    
+    @set('selected',str)
+    if @get('parentList.allLists.entryClicked')%2 is 0
+      @set('parentList.allLists.entryClicked', 0)
+    else
+      @set('parentList.allLists.entryClicked', 1) 
     if @get('content') isnt 'Name'
       @get('parentList').select(str)
       

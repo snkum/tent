@@ -1,4 +1,7 @@
 {{#if view.value}}
+{{#if view.head}}
+{{else}}
 <img {{bindAttr src="view.icon"}} height="20" width="15">
+{{/if}}
 <a>{{view.value}}</a>
 {{/if}}

@@ -1,6 +1,6 @@
 <div class="list-container">
-  {{view Ember.TextField valueBinding="view.value"}}
-  {{#view Tent.ButtonIconned label="tent"}}Search{{/view}}
+  {{view Ember.TextField valueBinding="view.value" placeholder="Search" id="textBox"}}
+  
   {{view Tent.List listBinding="view.dummy" entrySelectedBinding="view.clicked" listhead="Name,One,Two,Three" entryClickedBinding="view.update"}}
 </div>
 <div class="navbar-container">
@@ -15,7 +15,7 @@
 	
 </div>
 </div>
-
+<div class="page">
 {{#if view.clicked}}
 	<b>{{view.clicked}}</b>
 	<br>
@@ -28,7 +28,8 @@
 <br>
 <span>Now you can change the style</span>
 <br>
-{{#view Tent.ButtonIconned label="tent"}}Default{{/view}}
+{{#view Tent.ButtonIconned label="google"}}Google{{/view}}
 {{#view Tent.ButtonIconned label="fb"}}Facebook{{/view}}
-{{#view Tent.ButtonIconned label="gwt"}}Google{{/view}}</bottom>
+{{#view Tent.ButtonIconned label="my"}}My style{{/view}}</bottom>
+</div>
 </div>

@@ -8,7 +8,7 @@ require '../template/menu'
 
 Tent.Menu = Ember.View.extend
   tagName: 'menu'
-  classNames:['tent-menu-container']
+  classNames:['google-menu-container']
   classNameBindings:['updateClass']
   templateName: 'menu'
   listClick: 1
@@ -20,10 +20,17 @@ Tent.Menu = Ember.View.extend
   ).observes('clicked','update')
   
   updateClass: (->
-    return 'gwt-menu-container' if @get('label') is 'gwt'
+    return 'my-menu-container' if @get('label') is 'my'
     return 'fb-menu-container' if @get('label') is 'fb'
-    'tent-menu-container'
-  ).property('label') 
+    'google-menu-container'
+  ).property('label')
+  
+  keyUp: (event) -> 
+    if event.keyCode == 13
+      @set('clicked',@get('value'))
+      @set('value',null)
+      
+
   
 Tent.NavList = Ember.View.extend
   tagName: 'ul'
@@ -68,20 +75,11 @@ Tent.NavCell = Ember.View.extend
     @get('parentList').select(@get('content'))
   
   value: (->
-    if @val then @val['Name'] else ''
+    if @val
+      if @val['Name'] isnt '' then @val['Name'] else null
+      
   ).property('val') 
       
-  
-  
-# Tent.NavLink = Ember.View.extend
-  # tagName: 'a'
-  # defaultTemplate: Ember.Handlebars.compile('<span>{{view.value}}</span>')
-#   {{view Tent.NavLink cellBinding="view.content"}}
-  # value: (->
-    # if @cell then @cell['Name'] else ''
-  # ).property('cell')
-  
-
 Tent.ButtonIconned = Ember.View.extend
   tagName: 'button'
   countBinding: 'parentView.listClick'
@@ -101,6 +99,8 @@ Tent.ButtonIconned = Ember.View.extend
         @get('parentView').$('.navbar-container').removeClass('tent-slidein').addClass('tent-slideout')
         @set('count',3)
     else
-      @set('parentView.label', @label)
+      if @get('label') isnt 'search'
+        @set('parentView.label', @label)
+      
            
     

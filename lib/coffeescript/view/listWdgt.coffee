@@ -56,12 +56,17 @@ Tent.ListCell = Ember.View.extend
     @_super()
     @set('val', @get('content'))
     @set('selected',null)
+    @set('head',false)
   
   isHeading: (->
-    if @get('content') is 'Name'
-      'tent-heading'
+    if @val isnt 'noStyle'
+      if @val is 'Name'
+        @set('head',true)
+        'tent-heading'
+      else
+        'tent-list'
     else
-      'tent-list'
+      'noStyle'
   ).property('val')
   
   parentList: (-> @get('parentView.parentView')).property()
@@ -81,10 +86,13 @@ Tent.ListCell = Ember.View.extend
       
   value: (->
     cell = @get('parentList.content')
-    if cell then cell[@get('val')] else ''
+    if cell
+      if cell[@get('val')] is ''
+        @set('val','noStyle')
+    cell[@get('val')]
   ).property('content', 'parentView')
   
   icon: (->
     cell = @get('parentList.content')
-    if cell then cell['icon'+@get('val')] else ''
+    if cell and @val isnt 'Name' then cell['icon'+@get('val')] else ''
   ).property('content','parentView')  
